@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeGithubTheme {
                 val viewModel:GitHubViewModel= hiltViewModel()
-                val data= viewModel.responseFlow.collectAsState()
+                val data= viewModel.searchUserResponseFlow.collectAsState()
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Greeting(data.value.toString())

@@ -33,7 +33,7 @@ data class GitHubSearchUserList(
     @SerialName("repos_url")
     val reposUrl: String, // https://api.github.com/users/anu/repos
     @SerialName("score")
-    val score: Int, // 1
+    val score: Float, // 1
     @SerialName("site_admin")
     val siteAdmin: Boolean, // false
     @SerialName("starred_url")
