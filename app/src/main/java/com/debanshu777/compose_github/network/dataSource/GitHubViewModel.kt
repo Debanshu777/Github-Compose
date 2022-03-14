@@ -1,11 +1,14 @@
 package com.debanshu777.compose_github.network.dataSource
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.debanshu777.compose_github.network.model.GitHubSearchResponse
 import com.debanshu777.compose_github.network.model.GitHubSearchUserList
 import com.debanshu777.compose_github.network.model.GitHubUserResponse
+import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
+import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -13,32 +16,34 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRepository) :ViewModel() {
-    val userDataResponseFlow = MutableStateFlow<GitHubUserResponse?>(null)
-    val searchUserResponseFlow = MutableStateFlow<GitHubSearchResponse?>(null)
+    val userDataState = MutableStateFlow(ProfileState())
+    val searchState= MutableStateFlow(SearchState())
     init {
         getUserData("Debanshu777")
         searchUser("anu")
     }
     fun getUserData(userName:String)=viewModelScope.launch {
             kotlin.runCatching {
-                Log.e("Glance","Here")
+                Log.i("GitHubViewModel","in getUserData()")
+                userDataState.value=ProfileState(isLoading = true)
                 gitHubRepository.getUserData(userName)
             }.onSuccess {
-                Log.e("Glance",it.data.toString())
-                userDataResponseFlow.value=it.data
+                Log.i("getUserData()",it.data.toString())
+                userDataState.value=ProfileState(data=it.data)
             }.onFailure {
-                userDataResponseFlow.value=null
+                userDataState.value= ProfileState(error=it.message)
             }
         }
     fun searchUser(searchText:String)=viewModelScope.launch {
         kotlin.runCatching {
-            Log.e("Glance","Here")
+            Log.i("GitHubViewModel","in searchUser()")
+            searchState.value=SearchState(isLoading = true)
             gitHubRepository.searchUser(searchText)
         }.onSuccess {
-            Log.e("Glance",it.data.toString())
-            searchUserResponseFlow.value=it.data
+            Log.i("searchUser()",it.data.toString())
+            searchState.value=SearchState(data= it.data?.items)
         }.onFailure {
-            searchUserResponseFlow.value=null
+            searchState.value= SearchState(error=it.message)
         }
     }
 }
