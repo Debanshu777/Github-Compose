@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
+import com.debanshu777.compose_github.ui.feature_search.SearchScreen
 import com.debanshu777.compose_github.ui.theme.ComposeGithubTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
                 val data= viewModel.searchState.collectAsState()
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting(data.value.data.toString())
+                   SearchScreen(viewModel)
                 }
             }
         }
