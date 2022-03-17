@@ -69,9 +69,9 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:2.4.1"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-native-mt'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0-native-mt"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0"
 
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
@@ -87,21 +87,24 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 
     // Ktor Client
-    implementation "io.ktor:ktor-client-okhttp:1.6.6"
-    implementation "io.ktor:ktor-client-json:1.6.6"
-    implementation "io.ktor:ktor-client-serialization-jvm:1.6.6"
-    implementation "io.ktor:ktor-client-logging-jvm:1.6.6"
+    def ktor_version = "1.6.6"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
 
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
 
     // Coil
-    implementation "io.coil-kt:coil-compose:1.4.0"
+    implementation "io.coil-kt:coil-compose:2.0.0-rc01"
 
     // system ui controller
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"

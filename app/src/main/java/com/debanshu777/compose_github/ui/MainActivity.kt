@@ -32,8 +32,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-fun Greeting(data:String) {
-    Text(text = data)
-}

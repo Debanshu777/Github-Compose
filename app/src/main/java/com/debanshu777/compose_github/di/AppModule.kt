@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
+import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -18,14 +19,13 @@ import javax.inject.Singleton
 @Module
 object AppModule {
 
-    @Singleton
     @Provides
     fun provideKtorAPIClient():HttpClient{
         val json = kotlinx.serialization.json.Json {
             encodeDefaults = true
             ignoreUnknownKeys = true
         }
-       return HttpClient{
+       return HttpClient(Android){
             install(JsonFeature){
                 serializer = KotlinxSerializer(json)
             }

@@ -12,6 +12,7 @@ import com.debanshu777.compose_github.network.model.GitHubUserResponse
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
+import com.debanshu777.compose_github.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -39,8 +40,7 @@ class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRe
     }
 
     init {
-        getUserData("Debanshu777")
-        searchUser("anu")
+       // searchUser("anu")
     }
     fun getUserData(userName:String)=viewModelScope.launch {
             kotlin.runCatching {
@@ -55,15 +55,16 @@ class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRe
             }
         }
     fun searchUser(searchText:String)=viewModelScope.launch {
-        kotlin.runCatching {
-            Log.i("GitHubViewModel","in searchUser()")
-            searchState.value=SearchState(isLoading = true)
-            gitHubRepository.searchUser(searchText)
-        }.onSuccess {
-            Log.i("searchUser()",it.data.toString())
-            searchState.value=SearchState(data= it.data?.items)
-        }.onFailure {
-            searchState.value= SearchState(error=it.message)
+        when(val result =gitHubRepository.searchUser(searchText)){
+            is Resource.Loading->{
+                searchState.value=SearchState(isLoading = true)
+            }
+            is Resource.Success ->{
+                searchState.value=SearchState(data= if(result.data ==null) emptyList() else result.data.items)
+            }
+            is Resource.Error->{
+                searchState.value= SearchState(error=result.message)
+            }
         }
     }
 }
