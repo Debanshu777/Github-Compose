@@ -41,7 +41,6 @@ fun SearchBar(
                 Text(
                     modifier = Modifier.alpha(ContentAlpha.medium),
                     text = "Search here...",
-                    color = Color.White
                 )
             },
             textStyle = TextStyle(
@@ -57,7 +56,6 @@ fun SearchBar(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription ="Search Icons",
-                        tint = Color.White
                     )
                 }
             },
@@ -74,7 +72,6 @@ fun SearchBar(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription ="Close Icons",
-                        tint = Color.White
                     )
                 }
             },
@@ -88,7 +85,6 @@ fun SearchBar(
             ),
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Color.Transparent,
-                cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
             )
 
         )

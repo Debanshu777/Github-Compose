@@ -1,35 +1,32 @@
 package com.debanshu777.compose_github.ui.feature_search
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Badge
+import androidx.compose.material.BadgedBox
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
+import com.debanshu777.compose_github.ui.feature_search.components.Card
 import com.debanshu777.compose_github.ui.feature_search.components.MainAppBar
-import com.debanshu777.compose_github.ui.feature_search.components.SearchBar
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 
+@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun SearchScreen(viewModel: GitHubViewModel){
     val searchWidgetState by viewModel.searchWidgetState
@@ -60,24 +57,46 @@ fun SearchScreen(viewModel: GitHubViewModel){
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(10.dp)
         ) {
-            items(searchData.data!!){item ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(vertical = 10.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+            items(searchData.data){ item ->
+                Card(
+                    modifier = Modifier.height(120.dp)
                 ) {
-                   // Greeting(item.toString())
-                    AsyncImage(model = item.avatarUrl, contentDescription ="User Avatar" )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .padding(vertical = 20.dp, horizontal = 5.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Greeting(item.toString())
+                        BadgedBox(
+                            modifier = Modifier.padding(start = 10.dp),
+                            badge = {
+                                if (item.type != "User") {
+                                    Badge(
+                                        modifier = Modifier.height(10.dp).width(10.dp),
+                                        backgroundColor = Color.Blue
+                                    )
+                                }
+                        }
+                        ){
+                            AsyncImage(
+                                modifier= Modifier
+                                    .height(70.dp)
+                                    .width(70.dp)
+                                    .clip(CircleShape),
+                                model = item.avatarUrl,
+                                contentScale = ContentScale.Fit,
+                                contentDescription ="User Avatar" )
+                        }
+                        Text(
+                            modifier=Modifier.padding(20.dp),
+                            text="@${item.login}",
+                            fontSize = TextUnit(value= 20F, type = TextUnitType.Sp),
+                        )
+                    }
                 }
             }
         }
     }
-}
-
-@Composable
-fun Greeting(data:String) {
-    Text(text = data)
 }
