@@ -1,5 +1,6 @@
 package com.debanshu777.compose_github.ui.feature_search
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,15 +21,19 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.feature_search.components.Card
 import com.debanshu777.compose_github.ui.feature_search.components.MainAppBar
+import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
+import com.debanshu777.compose_github.ui.navigation.Screen
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun SearchScreen(viewModel: GitHubViewModel){
+fun SearchScreen(viewModel: GitHubViewModel, navController: NavController){
     val searchWidgetState by viewModel.searchWidgetState
     val searchTextState by viewModel.searchTextState
     val searchData by viewModel.searchState.collectAsState()
@@ -43,6 +48,7 @@ fun SearchScreen(viewModel: GitHubViewModel){
                 onCloseClicked = {
                     viewModel.updateSearchTextState("")
                     viewModel.updateSearchWidgetState(SearchWidgetState.CLOSED)
+                    viewModel.searchState.value= SearchState(data= emptyList())
                 },
                 onSearchClick = {
                     viewModel.searchUser(it)
@@ -65,7 +71,11 @@ fun SearchScreen(viewModel: GitHubViewModel){
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
-                            .padding(vertical = 20.dp, horizontal = 5.dp),
+                            .padding(vertical = 20.dp, horizontal = 5.dp)
+                            .clickable {
+                                item.login?.let { it1 -> viewModel.getUserData(it1) }
+                                navController.navigate(Screen.ProfileScreen.route)
+                            },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         // Greeting(item.toString())
@@ -74,7 +84,9 @@ fun SearchScreen(viewModel: GitHubViewModel){
                             badge = {
                                 if (item.type != "User") {
                                     Badge(
-                                        modifier = Modifier.height(10.dp).width(10.dp),
+                                        modifier = Modifier
+                                            .height(10.dp)
+                                            .width(10.dp),
                                         backgroundColor = Color.Blue
                                     )
                                 }

@@ -24,6 +24,7 @@ object AppModule {
         val json = kotlinx.serialization.json.Json {
             encodeDefaults = true
             ignoreUnknownKeys = true
+            isLenient = true
         }
        return HttpClient(Android){
             install(JsonFeature){

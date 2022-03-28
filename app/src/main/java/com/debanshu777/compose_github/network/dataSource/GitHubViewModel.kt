@@ -39,20 +39,18 @@ class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRe
         _searchTextState.value=newValue
     }
 
-    init {
-       // searchUser("anu")
-    }
     fun getUserData(userName:String)=viewModelScope.launch {
-            kotlin.runCatching {
-                Log.i("GitHubViewModel","in getUserData()")
+        when(val result =gitHubRepository.getUserData(userName)){
+            is Resource.Loading->{
                 userDataState.value=ProfileState(isLoading = true)
-                gitHubRepository.getUserData(userName)
-            }.onSuccess {
-                Log.i("getUserData()",it.data.toString())
-                userDataState.value=ProfileState(data=it.data)
-            }.onFailure {
-                userDataState.value= ProfileState(error=it.message)
             }
+            is Resource.Success ->{
+                userDataState.value=ProfileState(data= result.data)
+            }
+            is Resource.Error->{
+                searchState.value= SearchState(error=result.message)
+            }
+        }
         }
     fun searchUser(searchText:String)=viewModelScope.launch {
         when(val result =gitHubRepository.searchUser(searchText)){

@@ -7,67 +7,67 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GitHubUserResponse(
     @SerialName("avatar_url")
-    val avatarUrl: String,
+    val avatarUrl: String?,
     @SerialName("bio")
-    val bio: String,
+    val bio: String?,
     @SerialName("blog")
-    val blog: String,
+    val blog: String?,
     @SerialName("company")
-    val company: String,
+    val company: String?,
     @SerialName("created_at")
-    val createdAt: String,
+    val createdAt: String?,
     @SerialName("email")
     val email: String?,
     @SerialName("events_url")
-    val eventsUrl: String,
+    val eventsUrl: String?,
     @SerialName("followers")
-    val followers: Int,
+    val followers: Int?,
     @SerialName("followers_url")
-    val followersUrl: String,
+    val followersUrl: String?,
     @SerialName("following")
-    val following: Int,
+    val following: Int?,
     @SerialName("following_url")
-    val followingUrl: String,
+    val followingUrl: String?,
     @SerialName("gists_url")
-    val gistsUrl: String,
+    val gistsUrl: String?,
     @SerialName("gravatar_id")
-    val gravatarId: String,
+    val gravatarId: String?,
     @SerialName("hireable")
-    val hireable: Boolean,
+    val hireable: Boolean?,
     @SerialName("html_url")
-    val htmlUrl: String,
+    val htmlUrl: String?,
     @SerialName("id")
-    val id: Int,
+    val id: Int?,
     @SerialName("location")
-    val location: String,
+    val location: String?,
     @SerialName("login")
-    val login: String,
+    val login: String?,
     @SerialName("name")
-    val name: String,
+    val name: String?,
     @SerialName("node_id")
-    val nodeId: String,
+    val nodeId: String?,
     @SerialName("organizations_url")
-    val organizationsUrl: String,
+    val organizationsUrl: String?,
     @SerialName("public_gists")
-    val publicGists: Int,
+    val publicGists: Int?,
     @SerialName("public_repos")
-    val publicRepos: Int,
+    val publicRepos: Int?,
     @SerialName("received_events_url")
-    val receivedEventsUrl: String,
+    val receivedEventsUrl: String?,
     @SerialName("repos_url")
-    val reposUrl: String,
+    val reposUrl: String?,
     @SerialName("site_admin")
-    val siteAdmin: Boolean,
+    val siteAdmin: Boolean?,
     @SerialName("starred_url")
-    val starredUrl: String,
+    val starredUrl: String?,
     @SerialName("subscriptions_url")
-    val subscriptionsUrl: String,
+    val subscriptionsUrl: String?,
     @SerialName("twitter_username")
-    val twitterUsername: String,
+    val twitterUsername: String?,
     @SerialName("type")
-    val type: String,
+    val type: String?,
     @SerialName("updated_at")
-    val updatedAt: String,
+    val updatedAt: String?,
     @SerialName("url")
-    val url: String
+    val url: String?
 )
