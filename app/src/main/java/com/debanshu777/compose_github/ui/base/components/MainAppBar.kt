@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.debanshu777.compose_github.ui.base.components.SearchBar
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 
 @Composable

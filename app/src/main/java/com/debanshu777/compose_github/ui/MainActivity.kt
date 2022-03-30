@@ -3,17 +3,10 @@ package com.debanshu777.compose_github.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material.*
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
-import com.debanshu777.compose_github.ui.feature_search.SearchScreen
-import com.debanshu777.compose_github.ui.navigation.Navigation
+import com.debanshu777.compose_github.network.dataSource.githubViewModel
+import com.debanshu777.compose_github.ui.base.MainScreen
 import com.debanshu777.compose_github.ui.theme.ComposeGithubTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,10 +16,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeGithubTheme {
-                val viewModel:GitHubViewModel= hiltViewModel()
+                val viewModel:githubViewModel= hiltViewModel()
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                   Navigation(viewModel)
+                    MainScreen(viewModel)
                 }
             }
         }

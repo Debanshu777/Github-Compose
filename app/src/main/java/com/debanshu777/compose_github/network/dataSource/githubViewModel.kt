@@ -1,14 +1,10 @@
 package com.debanshu777.compose_github.network.dataSource
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.debanshu777.compose_github.network.model.GitHubSearchResponse
-import com.debanshu777.compose_github.network.model.GitHubSearchUserList
-import com.debanshu777.compose_github.network.model.GitHubUserResponse
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
@@ -19,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRepository) :ViewModel() {
+class githubViewModel @Inject constructor(private val gitHubRepository: githubRepository) :ViewModel() {
     val userDataState = MutableStateFlow(ProfileState())
     val searchState= MutableStateFlow(SearchState())
 

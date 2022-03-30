@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.io.use
 
-class GitHubRepository @Inject constructor(){
+class githubRepository @Inject constructor(){
     @Inject lateinit var httpClient : Provider<HttpClient>
     suspend fun getUserData(userId:String): Resource<GitHubUserResponse> {
         return try {

@@ -21,43 +21,18 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
+import com.debanshu777.compose_github.network.dataSource.githubViewModel
 import com.debanshu777.compose_github.ui.feature_search.components.Card
-import com.debanshu777.compose_github.ui.feature_search.components.MainAppBar
-import com.debanshu777.compose_github.ui.feature_search.state.SearchState
-import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
-import com.debanshu777.compose_github.ui.navigation.Screen
+import com.debanshu777.compose_github.ui.base.Screen
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun SearchScreen(viewModel: GitHubViewModel, navController: NavController){
-    val searchWidgetState by viewModel.searchWidgetState
-    val searchTextState by viewModel.searchTextState
+fun SearchScreen(viewModel: githubViewModel, navController: NavController){
     val searchData by viewModel.searchState.collectAsState()
     Scaffold(
-        topBar = {
-            MainAppBar(
-                searchWidgetState = searchWidgetState,
-                searchTextState = searchTextState,
-                onTextChange = {
-                    viewModel.updateSearchTextState(it)
-                },
-                onCloseClicked = {
-                    viewModel.updateSearchTextState("")
-                    viewModel.updateSearchWidgetState(SearchWidgetState.CLOSED)
-                    viewModel.searchState.value= SearchState(data= emptyList())
-                },
-                onSearchClick = {
-                    viewModel.searchUser(it)
-                },
-                onSearchTriggered={
-                    viewModel.updateSearchWidgetState(SearchWidgetState.OPENED)
-                }
-            )
-        }
+
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),

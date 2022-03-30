@@ -1,4 +1,4 @@
-package com.debanshu777.compose_github.ui.feature_search.components
+package com.debanshu777.compose_github.ui.base.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
