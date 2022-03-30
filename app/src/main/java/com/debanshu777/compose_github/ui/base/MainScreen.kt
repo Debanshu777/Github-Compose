@@ -27,11 +27,13 @@ fun MainScreen(viewModel: githubViewModel){
                     viewModel.updateSearchTextState("")
                     viewModel.updateSearchWidgetState(SearchWidgetState.CLOSED)
                     viewModel.searchState.value= SearchState(data= emptyList())
+                    navController.navigate(Screen.TrendingScreen.route)
                 },
                 onSearchClick = {
                     viewModel.searchUser(it)
                 },
                 onSearchTriggered={
+                    navController.navigate(Screen.SearchScreen.route)
                     viewModel.updateSearchWidgetState(SearchWidgetState.OPENED)
                 }
             )
