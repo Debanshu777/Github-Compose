@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
+import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendingState
 import com.debanshu777.compose_github.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class githubViewModel @Inject constructor(private val gitHubRepository: githubRepository) :ViewModel() {
     val userDataState = MutableStateFlow(ProfileState())
+    val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
     val searchState= MutableStateFlow(SearchState())
 
     private val _searchWidgetState:MutableState<SearchWidgetState> =
@@ -47,7 +49,7 @@ class githubViewModel @Inject constructor(private val gitHubRepository: githubRe
                 searchState.value= SearchState(error=result.message)
             }
         }
-        }
+    }
     fun searchUser(searchText:String)=viewModelScope.launch {
         when(val result =gitHubRepository.searchUser(searchText)){
             is Resource.Loading->{
@@ -58,6 +60,21 @@ class githubViewModel @Inject constructor(private val gitHubRepository: githubRe
             }
             is Resource.Error->{
                 searchState.value= SearchState(error=result.message)
+            }
+        }
+    }
+
+    fun getTrendingRepository(timeline:String)=viewModelScope.launch {
+        when(val result =gitHubRepository.getTrendingRepository(timeline)){
+            is Resource.Loading->{
+                trendingRepositoryDataState.value=RepositoryTrendingState(isLoading = true)
+            }
+            is Resource.Success ->{
+                trendingRepositoryDataState.value=RepositoryTrendingState(data= result.data
+                    ?: emptyList())
+            }
+            is Resource.Error->{
+                trendingRepositoryDataState.value= RepositoryTrendingState(error=result.message)
             }
         }
     }
