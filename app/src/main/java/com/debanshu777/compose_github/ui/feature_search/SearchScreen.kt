@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.debanshu777.compose_github.network.dataSource.githubViewModel
+import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.feature_search.components.Card
 import com.debanshu777.compose_github.ui.base.Screen
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun SearchScreen(viewModel: githubViewModel, navController: NavController){
+fun SearchScreen(viewModel: GitHubViewModel, navController: NavController){
     val searchData by viewModel.searchState.collectAsState()
     Scaffold(
 

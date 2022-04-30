@@ -5,6 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.debanshu777.compose_github.ui.feature_trending.state.DeveloperTrendingState
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
@@ -16,11 +17,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class githubViewModel @Inject constructor(private val gitHubRepository: githubRepository) :ViewModel() {
+class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRepository) :ViewModel() {
     val userDataState = MutableStateFlow(ProfileState())
     val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
+    val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
     val searchState= MutableStateFlow(SearchState())
 
+    init {
+        getTrendingRepository("monthly")
+        getTrendingDeveloper("monthly")
+    }
     private val _searchWidgetState:MutableState<SearchWidgetState> =
         mutableStateOf(value = SearchWidgetState.CLOSED)
     val searchWidgetState:State<SearchWidgetState> = _searchWidgetState
@@ -65,7 +71,7 @@ class githubViewModel @Inject constructor(private val gitHubRepository: githubRe
     }
 
     fun getTrendingRepository(timeline:String)=viewModelScope.launch {
-        when(val result =gitHubRepository.getTrendingRepository(timeline)){
+        when(val result = gitHubRepository.getTrendingRepository(timeline)){
             is Resource.Loading->{
                 trendingRepositoryDataState.value=RepositoryTrendingState(isLoading = true)
             }
@@ -75,6 +81,21 @@ class githubViewModel @Inject constructor(private val gitHubRepository: githubRe
             }
             is Resource.Error->{
                 trendingRepositoryDataState.value= RepositoryTrendingState(error=result.message)
+            }
+        }
+    }
+
+    fun getTrendingDeveloper(timeline:String)=viewModelScope.launch {
+        when(val result = gitHubRepository.getTrendingDeveloper(timeline)){
+            is Resource.Loading->{
+                trendingDeveloperDataState.value= DeveloperTrendingState(isLoading = true)
+            }
+            is Resource.Success ->{
+                trendingDeveloperDataState.value= DeveloperTrendingState(data= result.data
+                    ?: emptyList())
+            }
+            is Resource.Error->{
+                trendingDeveloperDataState.value= DeveloperTrendingState(error=result.message)
             }
         }
     }

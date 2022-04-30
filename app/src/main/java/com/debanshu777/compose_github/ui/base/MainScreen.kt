@@ -4,14 +4,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.rememberNavController
-import com.debanshu777.compose_github.network.dataSource.githubViewModel
+import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.base.components.BottomBar
 import com.debanshu777.compose_github.ui.feature_search.components.MainAppBar
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 
 @Composable
-fun MainScreen(viewModel: githubViewModel){
+fun MainScreen(viewModel: GitHubViewModel){
     val navController = rememberNavController()
     val searchWidgetState by viewModel.searchWidgetState
     val searchTextState by viewModel.searchTextState

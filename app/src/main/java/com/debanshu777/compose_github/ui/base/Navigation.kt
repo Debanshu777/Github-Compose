@@ -4,14 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.debanshu777.compose_github.network.dataSource.githubViewModel
+import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.feature_follow.FollowScreen
 import com.debanshu777.compose_github.ui.feature_profile.ProfileScreen
 import com.debanshu777.compose_github.ui.feature_search.SearchScreen
 import com.debanshu777.compose_github.ui.feature_trending.TrendingScreen
 
 @Composable
-fun Navigation(viewModel: githubViewModel, navController: NavHostController) {
+fun Navigation(viewModel: GitHubViewModel, navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screen.TrendingScreen.route) {
         composable(route = Screen.SearchScreen.route){
             SearchScreen(viewModel,navController)
@@ -20,7 +20,7 @@ fun Navigation(viewModel: githubViewModel, navController: NavHostController) {
             ProfileScreen(viewModel)
         }
         composable(route= Screen.TrendingScreen.route){
-            TrendingScreen()
+            TrendingScreen(viewModel)
         }
         composable(route = Screen.FollowScreen.route){
             FollowScreen()
