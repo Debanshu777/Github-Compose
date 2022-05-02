@@ -10,6 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -22,20 +25,16 @@ import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 @Composable
 fun DeveloperCard(item: TrendingDeveloperItem) {
     Card(
-        modifier = Modifier.height(120.dp)
+        modifier = Modifier.height(180.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(vertical = 20.dp, horizontal = 5.dp)
-                .clickable {
-//                                item.login?.let { it1 -> viewModel.getUserData(it1) }
-//                                navController.navigate(Screen.ProfileScreen.route)
-                },
+                .clickable { },
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Greeting(item.toString())
             AsyncImage(
                 modifier = Modifier
                     .height(70.dp)
@@ -45,11 +44,35 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
                 contentScale = ContentScale.Fit,
                 contentDescription = "User Avatar"
             )
-            Text(
-                modifier = Modifier.padding(20.dp),
-                text = "@${item.username}",
-                fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
-            )
+            Column(
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text(
+                    text = item.name ?: "NA",
+                    fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
+                )
+                Text(
+                    text = "@${item.username}",
+                    fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Popular Project",
+                    fontWeight= FontWeight.Bold,
+                    fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                )
+                Text(
+                    text = item.repo!!.name ?: "NA",
+                    fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(
+                    text = item.repo!!.description ?: "NA",
+                    maxLines=2,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
+                )
+            }
         }
     }
 }

@@ -45,6 +45,7 @@ fun <T> TabLayout(data: List<T>) {
                 if(item is TrendingDeveloperItem){
                     DeveloperCard(item)
                 }
+                Spacer(modifier = Modifier.height(5.dp))
             }
         }
     }
