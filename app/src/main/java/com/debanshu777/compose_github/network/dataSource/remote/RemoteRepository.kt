@@ -1,4 +1,4 @@
-package com.debanshu777.compose_github.network.dataSource
+package com.debanshu777.compose_github.network.dataSource.remote
 
 import com.debanshu777.compose_github.BuildConfig
 import com.debanshu777.compose_github.network.model.*
@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.io.use
 
-class GitHubRepository @Inject constructor(){
+class RemoteRepository @Inject constructor(){
     @Inject lateinit var httpClient : Provider<HttpClient>
     suspend fun getUserData(userId:String): Resource<GitHubUserResponse> {
         return try {

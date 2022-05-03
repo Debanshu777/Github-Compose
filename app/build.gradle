@@ -5,6 +5,7 @@ plugins {
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.squareup.sqldelight'
 }
 
 android {
@@ -110,4 +111,14 @@ dependencies {
     // Pager
     implementation "com.google.accompanist:accompanist-pager:0.23.1"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.23.1"
+
+    //SQLDelight
+    implementation "com.squareup.sqldelight:android-driver:1.5.3"
+    implementation "com.squareup.sqldelight:coroutines-extensions-jvm:1.5.3"
+}
+
+sqldelight{
+    GithubDatatbase{
+        packageName="com.debanshu777.compose_github"
+    }
 }

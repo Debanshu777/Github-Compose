@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRepository) :ViewModel() {
+class GitHubViewModel @Inject constructor(private val mainRepository: MainRepository) :ViewModel() {
     val userDataState = MutableStateFlow(ProfileState())
     val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
     val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
@@ -44,7 +44,7 @@ class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRe
     }
 
     fun getUserData(userName:String)=viewModelScope.launch {
-        when(val result =gitHubRepository.getUserData(userName)){
+        when(val result =mainRepository.getUserData(userName)){
             is Resource.Loading->{
                 userDataState.value=ProfileState(isLoading = true)
             }
@@ -57,7 +57,7 @@ class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRe
         }
     }
     fun searchUser(searchText:String)=viewModelScope.launch {
-        when(val result =gitHubRepository.searchUser(searchText)){
+        when(val result =mainRepository.searchUser(searchText)){
             is Resource.Loading->{
                 searchState.value=SearchState(isLoading = true)
             }
@@ -71,7 +71,7 @@ class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRe
     }
 
     fun getTrendingRepository(timeline:String)=viewModelScope.launch {
-        when(val result = gitHubRepository.getTrendingRepository(timeline)){
+        when(val result = mainRepository.getTrendingRepository(timeline)){
             is Resource.Loading->{
                 trendingRepositoryDataState.value=RepositoryTrendingState(isLoading = true)
             }
@@ -86,7 +86,7 @@ class GitHubViewModel @Inject constructor(private val gitHubRepository: GitHubRe
     }
 
     fun getTrendingDeveloper(timeline:String)=viewModelScope.launch {
-        when(val result = gitHubRepository.getTrendingDeveloper(timeline)){
+        when(val result = mainRepository.getTrendingDeveloper(timeline)){
             is Resource.Loading->{
                 trendingDeveloperDataState.value= DeveloperTrendingState(isLoading = true)
             }

@@ -1,0 +1,34 @@
+CREATE TABLE repositoryFollow (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    authorName TEXT NOT NULL,
+    name TEXT NOT NULL,
+    avatar TEXT,
+    description TEXT,
+    language TEXT,
+    languageColor TEXT,
+    forks INTEGER,
+    stars INTEGER
+);
+
+getRepositoryById:
+SELECT *
+FROM repositoryFollow
+WHERE id = :id;
+
+getRepositoryByName:
+SELECT *
+FROM repositoryFollow
+WHERE name = :name;
+
+getAllRepository:
+SELECT *
+FROM repositoryFollow;
+
+insertRepository:
+INSERT OR REPLACE
+INTO repositoryFollow
+VALUES (?,?,?,?,?,?,?,?,?);
+
+deleteRepositoryById:
+DELETE FROM repositoryFollow
+WHERE id=:id;

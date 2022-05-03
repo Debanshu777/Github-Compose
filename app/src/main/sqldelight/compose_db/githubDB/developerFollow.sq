@@ -1,0 +1,29 @@
+CREATE TABLE developerFollow (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    name TEXT NOT NULL,
+    avatar TEXT
+);
+
+getDeveloperById:
+SELECT *
+FROM developerFollow
+WHERE id= :id;
+
+getDeveloperByName:
+SELECT *
+FROM developerFollow
+WHERE name=:name;
+
+getAllDeveloper:
+SELECT *
+FROM developerFollow;
+
+insertDeveloper:
+INSERT OR REPLACE
+INTO developerFollow
+VALUES (?,?,?,?);
+
+deleteDeveloperById:
+DELETE FROM developerFollow
+WHERE id=:id;

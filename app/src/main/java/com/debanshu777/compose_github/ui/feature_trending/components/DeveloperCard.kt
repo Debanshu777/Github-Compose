@@ -67,7 +67,7 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
                 )
                 Spacer(modifier = Modifier.height(3.dp))
                 Text(
-                    text = item.repo!!.description ?: "NA",
+                    text = item.repo.description ?: "NA",
                     maxLines=2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
