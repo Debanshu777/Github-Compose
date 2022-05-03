@@ -22,7 +22,7 @@ fun <T> TabLayout(data: List<T>) {
         verticalArrangement = Arrangement.Center
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 30.dp),
             contentPadding = PaddingValues(10.dp)
         ) {
             items(data) { item ->

@@ -27,13 +27,13 @@ import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 @Composable
 fun RepositoryCard(item: TrendingRepositoryItem) {
     Card(
-        modifier = Modifier.height(145.dp)
+        modifier = Modifier.height(180.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 10.dp)
+                .padding(horizontal = 5.dp,vertical=5.dp)
                 .clickable {
                 },
             verticalAlignment = Alignment.CenterVertically
@@ -48,7 +48,7 @@ fun RepositoryCard(item: TrendingRepositoryItem) {
                 contentDescription = "User Avatar"
             )
             Column(
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(horizontal=8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -80,11 +80,15 @@ fun RepositoryCard(item: TrendingRepositoryItem) {
                 }
                 Text(
                     text = item.name ?: "NA",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
                 )
                 Text(
                     text = "@${item.author}",
                     fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
                 Spacer(modifier = Modifier.height(5.dp))
@@ -95,24 +99,38 @@ fun RepositoryCard(item: TrendingRepositoryItem) {
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(50.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        modifier = Modifier.padding(horizontal = 5.dp),
-                        text = item.language ?: "NA",
-                        fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
-                    )
-                    Canvas(
-                        modifier = Modifier
-                            .height(10.dp)
-                            .width(10.dp)
-                    ) {
-                        drawCircle(
-                            color = item.languageColor?.toColorInt()?.let { Color(it) } ?: Color.Green,
-                            radius = 20f
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Canvas(
+                            modifier = Modifier
+                                .height(10.dp)
+                                .width(10.dp)
+                        ) {
+                            drawCircle(
+                                color = item.languageColor?.toColorInt()?.let { Color(it) }
+                                    ?: Color.Green,
+                                radius = 20f
+                            )
+                        }
+                        Text(
+                            modifier = Modifier.padding(horizontal = 5.dp),
+                            text = item.language ?: "NA",
+                            fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                         )
+                    }
+                    Surface(
+                        shape = CircleShape,
+                        modifier = Modifier
+                            .padding(6.dp)
+                            .size(32.dp),
+                        color = Color(0x77000000)
+                    ) {
+                        FavoriteButton(modifier = Modifier.padding(8.dp))
                     }
                 }
             }

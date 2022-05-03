@@ -4,11 +4,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -29,7 +31,7 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = 20.dp, horizontal = 5.dp)
+                .padding(horizontal = 5.dp,vertical=5.dp)
                 .clickable { },
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -43,14 +45,18 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
                 contentDescription = "User Avatar"
             )
             Column(
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(horizontal=8.dp)
             ) {
                 Text(
                     text = item.name ?: "NA",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
                 )
                 Text(
                     text = "@${item.username}",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -61,6 +67,8 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
                 )
                 Text(
                     text = item.repo!!.name ?: "NA",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
                 Spacer(modifier = Modifier.height(3.dp))
@@ -70,6 +78,20 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
                 )
+                Row(
+                    modifier=Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Surface(
+                        shape = CircleShape,
+                        modifier = Modifier
+                            .padding(6.dp)
+                            .size(32.dp),
+                        color = Color(0x77000000)
+                    ) {
+                        FavoriteButton(modifier = Modifier.padding(8.dp))
+                    }
+                }
             }
         }
     }
