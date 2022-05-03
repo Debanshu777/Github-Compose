@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
@@ -19,7 +18,6 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
-import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
@@ -58,7 +56,7 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Popular Project",
-                    fontWeight= FontWeight.Bold,
+                    fontWeight = FontWeight.Bold,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
                 Text(
@@ -68,7 +66,7 @@ fun DeveloperCard(item: TrendingDeveloperItem) {
                 Spacer(modifier = Modifier.height(3.dp))
                 Text(
                     text = item.repo.description ?: "NA",
-                    maxLines=2,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
                 )

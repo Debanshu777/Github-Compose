@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun SearchBar(
     text: String,
-    onTextChange:(String)->Unit,
-    onCloseClicked:()->Unit,
-    onSearchClicked:(String)->Unit
-){
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit
+) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,27 +51,27 @@ fun SearchBar(
                 IconButton(
                     modifier = Modifier
                         .alpha(ContentAlpha.medium),
-                    onClick = {  }
-                ){
+                    onClick = { }
+                ) {
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription ="Search Icons",
+                        contentDescription = "Search Icons",
                     )
                 }
             },
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        if(text.isNotEmpty()){
+                        if (text.isNotEmpty()) {
                             onTextChange("")
-                        }else{
+                        } else {
                             onCloseClicked()
                         }
                     }
-                ){
+                ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription ="Close Icons",
+                        contentDescription = "Close Icons",
                     )
                 }
             },
@@ -93,6 +93,6 @@ fun SearchBar(
 
 @Composable
 @Preview
-fun SearchBarPreview(){
-    SearchBar(text = "Some Random Text", onTextChange = {}, onCloseClicked = { }, onSearchClicked ={} )
+fun SearchBarPreview() {
+    SearchBar(text = "Some Random Text", onTextChange = {}, onCloseClicked = { }, onSearchClicked = {})
 }

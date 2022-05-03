@@ -21,14 +21,14 @@ fun Card(
     border: BorderStroke? = null,
     elevation: Dp = 1.dp,
     content: @Composable () -> Unit
-){
+) {
     Surface(
-        modifier = modifier.padding(vertical = 2.5.dp ),
+        modifier = modifier.padding(vertical = 2.5.dp),
         shape = shape,
         backgroundColor,
         contentColor = contentColor,
         border = border,
-        elevation=elevation,
+        elevation = elevation,
         content = content
     )
 }

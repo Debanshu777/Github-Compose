@@ -18,15 +18,15 @@ fun MainAppBar(
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClick: (String) -> Unit,
-    onSearchTriggered:()->Unit
-){
-    when(searchWidgetState){
-        SearchWidgetState.CLOSED->{
+    onSearchTriggered: () -> Unit
+) {
+    when (searchWidgetState) {
+        SearchWidgetState.CLOSED -> {
             DefaultAppBar(
-                onSearchClick=onSearchTriggered
+                onSearchClick = onSearchTriggered
             )
         }
-        SearchWidgetState.OPENED->{
+        SearchWidgetState.OPENED -> {
             SearchBar(
                 text = searchTextState,
                 onTextChange = onTextChange,
@@ -35,17 +35,16 @@ fun MainAppBar(
             )
         }
     }
-
 }
 
 @Composable
-fun DefaultAppBar(onSearchClick:()->Unit){
+fun DefaultAppBar(onSearchClick: () -> Unit) {
     TopAppBar(
         title = {
             Text(text = "GitHub")
         },
         actions = {
-            IconButton(onClick = {onSearchClick()}) {
+            IconButton(onClick = { onSearchClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search Icon"
@@ -57,6 +56,6 @@ fun DefaultAppBar(onSearchClick:()->Unit){
 
 @Composable
 @Preview
-fun SearchScreenPreview(){
-    DefaultAppBar(onSearchClick={})
+fun SearchScreenPreview() {
+    DefaultAppBar(onSearchClick = {})
 }

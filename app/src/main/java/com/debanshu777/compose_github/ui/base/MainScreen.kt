@@ -11,7 +11,7 @@ import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 
 @Composable
-fun MainScreen(viewModel: GitHubViewModel){
+fun MainScreen(viewModel: GitHubViewModel) {
     val navController = rememberNavController()
     val searchWidgetState by viewModel.searchWidgetState
     val searchTextState by viewModel.searchTextState
@@ -26,20 +26,20 @@ fun MainScreen(viewModel: GitHubViewModel){
                 onCloseClicked = {
                     viewModel.updateSearchTextState("")
                     viewModel.updateSearchWidgetState(SearchWidgetState.CLOSED)
-                    viewModel.searchState.value= SearchState(data= emptyList())
+                    viewModel.searchState.value = SearchState(data = emptyList())
                     navController.navigate(Screen.TrendingScreen.route)
                 },
                 onSearchClick = {
                     viewModel.searchUser(it)
                 },
-                onSearchTriggered={
+                onSearchTriggered = {
                     navController.navigate(Screen.SearchScreen.route)
                     viewModel.updateSearchWidgetState(SearchWidgetState.OPENED)
                 }
             )
         },
-        bottomBar = { BottomBar(navController = navController)}
+        bottomBar = { BottomBar(navController = navController) }
     ) {
-        Navigation(viewModel,navController)
+        Navigation(viewModel, navController)
     }
 }

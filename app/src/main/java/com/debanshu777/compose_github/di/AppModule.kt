@@ -30,7 +30,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesSqlDriver(@ApplicationContext context: Context):SqlDriver{
+    fun providesSqlDriver(@ApplicationContext context: Context): SqlDriver {
         return AndroidSqliteDriver(
             schema = GithubDatatbase.Schema,
             context = context,
@@ -40,7 +40,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRepositoryDataSource(driver: SqlDriver):RepositoryDataSource{
+    fun provideRepositoryDataSource(driver: SqlDriver): RepositoryDataSource {
         return RepositoryDataSourceImpl(GithubDatatbase(driver))
     }
 
@@ -51,28 +51,28 @@ object AppModule {
     }
 
     @Provides
-    fun provideKtorAPIClient():HttpClient{
+    fun provideKtorAPIClient(): HttpClient {
         val json = kotlinx.serialization.json.Json {
             encodeDefaults = true
             ignoreUnknownKeys = true
             isLenient = true
         }
-       return HttpClient(Android){
-            install(JsonFeature){
+        return HttpClient(Android) {
+            install(JsonFeature) {
                 serializer = KotlinxSerializer(json)
             }
-            install(Logging){
-                logger= object : Logger {
+            install(Logging) {
+                logger = object : Logger {
                     override fun log(message: String) {
-                        Log.d("Network Message","log: $message")
+                        Log.d("Network Message", "log: $message")
                     }
                 }
-                level= LogLevel.ALL
+                level = LogLevel.ALL
             }
-            install(HttpTimeout){
-                socketTimeoutMillis=30_000
-                requestTimeoutMillis=30_000
-                connectTimeoutMillis=30_000
+            install(HttpTimeout) {
+                socketTimeoutMillis = 30_000
+                requestTimeoutMillis = 30_000
+                connectTimeoutMillis = 30_000
             }
             defaultRequest {
                 contentType(ContentType.Application.Json)

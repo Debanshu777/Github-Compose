@@ -14,8 +14,8 @@ fun TrendingScreen(viewModel: GitHubViewModel) {
     val trendingDeveloperDataState by viewModel.trendingDeveloperDataState.collectAsState()
 
     val pagerState = rememberPagerState(0)
-    val pageCount=2
+    val pageCount = 2
     val tabList = listOf("Repository", "Developer")
-    val dataList= listOf(trendingRepositoryDataState.data,trendingDeveloperDataState.data)
-    TabHandler(pagerState,pageCount,tabList,dataList)
+    val dataList = listOf(trendingRepositoryDataState.data, trendingDeveloperDataState.data)
+    TabHandler(pagerState, pageCount, tabList, dataList)
 }

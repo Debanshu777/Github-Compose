@@ -24,21 +24,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
-import com.debanshu777.compose_github.ui.feature_search.components.Card
 import com.debanshu777.compose_github.ui.base.Screen
+import com.debanshu777.compose_github.ui.feature_search.components.Card
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun SearchScreen(viewModel: GitHubViewModel, navController: NavController){
+fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
     val searchData by viewModel.searchState.collectAsState()
-    Scaffold(
-
-    ) {
+    Scaffold() {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(10.dp)
         ) {
-            items(searchData.data){ item ->
+            items(searchData.data) { item ->
                 Card(
                     modifier = Modifier.height(120.dp)
                 ) {
@@ -65,21 +63,22 @@ fun SearchScreen(viewModel: GitHubViewModel, navController: NavController){
                                         backgroundColor = Color.Blue
                                     )
                                 }
-                        }
-                        ){
+                            }
+                        ) {
                             AsyncImage(
-                                modifier= Modifier
+                                modifier = Modifier
                                     .height(70.dp)
                                     .width(70.dp)
                                     .clip(CircleShape),
                                 model = item.avatarUrl,
                                 contentScale = ContentScale.Fit,
-                                contentDescription ="User Avatar" )
+                                contentDescription = "User Avatar"
+                            )
                         }
                         Text(
-                            modifier=Modifier.padding(20.dp),
-                            text="@${item.login}",
-                            fontSize = TextUnit(value= 20F, type = TextUnitType.Sp),
+                            modifier = Modifier.padding(20.dp),
+                            text = "@${item.login}",
+                            fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
                         )
                     }
                 }

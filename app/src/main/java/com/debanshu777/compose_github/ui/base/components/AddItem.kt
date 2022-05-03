@@ -14,9 +14,9 @@ fun RowScope.AddItem(
     screen: Screen,
     currentDestination: NavDestination?,
     navController: NavHostController
-){
+) {
     BottomNavigationItem(
-        label={
+        label = {
             Text(text = screen.title)
         },
         icon = {
@@ -25,14 +25,14 @@ fun RowScope.AddItem(
                 contentDescription = "Navigation Icon"
             )
         },
-        selected = currentDestination?.hierarchy?.any{
+        selected = currentDestination?.hierarchy?.any {
             it.route == screen.route
         } == true,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
         onClick = {
-            navController.navigate(screen.route){
+            navController.navigate(screen.route) {
                 popUpTo(navController.graph.findStartDestination().id)
-                launchSingleTop =true
+                launchSingleTop = true
             }
         }
     )

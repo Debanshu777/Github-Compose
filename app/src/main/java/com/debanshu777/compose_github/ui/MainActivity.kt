@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeGithubTheme {
-                val viewModel:GitHubViewModel= hiltViewModel()
+                val viewModel: GitHubViewModel = hiltViewModel()
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     MainScreen(viewModel)

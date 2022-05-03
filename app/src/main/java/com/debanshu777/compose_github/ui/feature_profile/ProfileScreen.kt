@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 
 @Composable
-fun ProfileScreen(viewModel:GitHubViewModel){
+fun ProfileScreen(viewModel: GitHubViewModel) {
     val profileData by viewModel.userDataState.collectAsState()
     Text(text = profileData.data.toString())
 }

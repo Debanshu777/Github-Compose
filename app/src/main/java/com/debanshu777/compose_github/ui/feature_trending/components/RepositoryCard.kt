@@ -9,9 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,16 +51,16 @@ fun RepositoryCard(item: TrendingRepositoryItem) {
                 modifier = Modifier.padding(8.dp)
             ) {
                 Row(
-                    modifier=Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement=Arrangement.End
+                    horizontalArrangement = Arrangement.End
                 ) {
                     Text(
                         text = item.stars.toString(),
                         fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                     )
                     Icon(
-                        modifier= Modifier
+                        modifier = Modifier
                             .size(25.dp)
                             .padding(3.dp),
                         painter = painterResource(id = R.drawable.ic_star),
@@ -73,7 +71,7 @@ fun RepositoryCard(item: TrendingRepositoryItem) {
                         fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                     )
                     Icon(
-                        modifier= Modifier
+                        modifier = Modifier
                             .size(25.dp)
                             .padding(3.dp),
                         painter = painterResource(id = R.drawable.ic_git_icon),
@@ -86,29 +84,31 @@ fun RepositoryCard(item: TrendingRepositoryItem) {
                 )
                 Text(
                     text = "@${item.author}",
-                    fontWeight= FontWeight.Bold,
+                    fontWeight = FontWeight.Bold,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
                     text = item.description ?: "",
-                    maxLines=2,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
                 )
                 Row(
-                    modifier=Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement=Arrangement.End
+                    horizontalArrangement = Arrangement.End
                 ) {
                     Text(
-                        modifier =Modifier.padding(horizontal = 5.dp),
+                        modifier = Modifier.padding(horizontal = 5.dp),
                         text = item.language ?: "NA",
                         fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                     )
-                    Canvas(modifier = Modifier
-                        .height(10.dp)
-                        .width(10.dp)) {
+                    Canvas(
+                        modifier = Modifier
+                            .height(10.dp)
+                            .width(10.dp)
+                    ) {
                         drawCircle(
                             color = item.languageColor?.toColorInt()?.let { Color(it) } ?: Color.Green,
                             radius = 20f

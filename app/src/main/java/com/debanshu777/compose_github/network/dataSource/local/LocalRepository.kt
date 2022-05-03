@@ -9,21 +9,21 @@ class LocalRepository @Inject constructor(
     private val developerDataSourceImpl: DeveloperDataSource,
     private val repositoryDataSourceImpl: RepositoryDataSource
 ) {
-    suspend fun getRepositoryById(id: Long): RepositoryFollow?{
+    suspend fun getRepositoryById(id: Long): RepositoryFollow? {
         return repositoryDataSourceImpl.getRepositoryById(id)
     }
-    suspend fun getDeveloperById(Id: Long): DeveloperFollow?{
-        return developerDataSourceImpl.getDeveloperById(Id);
+    suspend fun getDeveloperById(Id: Long): DeveloperFollow? {
+        return developerDataSourceImpl.getDeveloperById(Id)
     }
 
-    suspend fun getRepositoryByName(name: String): RepositoryFollow?{
+    suspend fun getRepositoryByName(name: String): RepositoryFollow? {
         return repositoryDataSourceImpl.getRepositoryByName(name)
     }
     suspend fun getDeveloperByName(name: String): DeveloperFollow? {
         return developerDataSourceImpl.getDeveloperByName(name)
     }
 
-    fun getAllRepository(): Flow<List<RepositoryFollow>>{
+    fun getAllRepository(): Flow<List<RepositoryFollow>> {
         return repositoryDataSourceImpl.getAllRepository()
     }
     fun getAllDeveloper(): Flow<List<DeveloperFollow>> {
@@ -49,7 +49,7 @@ class LocalRepository @Inject constructor(
         stars: Long
     ) {
         return repositoryDataSourceImpl.insertRepository(
-            id, authorName,name,avatar,description,language,languageColor,forks, stars
+            id, authorName, name, avatar, description, language, languageColor, forks, stars
         )
     }
 
@@ -60,7 +60,7 @@ class LocalRepository @Inject constructor(
         avatar: String
     ) {
         return developerDataSourceImpl.insertDeveloper(
-            id, userName,name,avatar
+            id, userName, name, avatar
         )
     }
 }

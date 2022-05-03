@@ -8,15 +8,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.debanshu777.compose_github.ui.base.Screen
 
 @Composable
-fun BottomBar(navController: NavHostController){
+fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         Screen.TrendingScreen,
         Screen.FollowScreen
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination=navBackStackEntry?.destination
+    val currentDestination = navBackStackEntry?.destination
     BottomNavigation {
-        screens.forEach{ screen ->
+        screens.forEach { screen ->
             AddItem(screen = screen, currentDestination = currentDestination, navController = navController)
         }
     }

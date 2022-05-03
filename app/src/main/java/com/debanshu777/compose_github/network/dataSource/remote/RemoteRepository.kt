@@ -11,58 +11,66 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.io.use
 
-class RemoteRepository @Inject constructor(){
-    @Inject lateinit var httpClient : Provider<HttpClient>
-    suspend fun getUserData(userId:String): Resource<GitHubUserResponse> {
+class RemoteRepository @Inject constructor() {
+    @Inject lateinit var httpClient: Provider<HttpClient>
+    suspend fun getUserData(userId: String): Resource<GitHubUserResponse> {
         return try {
-            Resource.Success(data = httpClient.get().use {
-                it.get("${GITHUB_BASE_URL}users/${userId}")
-            })
-        }catch (e:Exception){
-            Resource.Error(message = e.message.toString())
-        }
-    }
-
-    suspend fun searchUser(searchText:String): Resource<GitHubSearchResponse> {
-        return try {
-            Resource.Success(data = httpClient.get().use {
-                it.get("${GITHUB_BASE_URL}search/users"){
-                    parameter("q", searchText)
+            Resource.Success(
+                data = httpClient.get().use {
+                    it.get("${GITHUB_BASE_URL}users/$userId")
                 }
-            })
-        }catch (e:Exception){
+            )
+        } catch (e: Exception) {
             Resource.Error(message = e.message.toString())
         }
     }
 
-    suspend fun getTrendingRepository(timeline:String): Resource<List<TrendingRepositoryItem>> {
+    suspend fun searchUser(searchText: String): Resource<GitHubSearchResponse> {
         return try {
-            Resource.Success(data = httpClient.get().use {
-                it.get("${RAPID_BASE_API}repositories"){
-                    parameter("since", timeline)
-                    headers{
-                        append("X-RapidAPI-Host",BuildConfig.RapidAPIHost)
-                        append("X-RapidAPI-Key",BuildConfig.RapidAPIKey)
+            Resource.Success(
+                data = httpClient.get().use {
+                    it.get("${GITHUB_BASE_URL}search/users") {
+                        parameter("q", searchText)
                     }
                 }
-            })
-        }catch (e:Exception){
+            )
+        } catch (e: Exception) {
             Resource.Error(message = e.message.toString())
         }
     }
 
-    suspend fun getTrendingDeveloper(timeline:String): Resource<List<TrendingDeveloperItem>> {
+    suspend fun getTrendingRepository(timeline: String): Resource<List<TrendingRepositoryItem>> {
         return try {
-            Resource.Success(data = httpClient.get().use {
-                it.get("${RAPID_BASE_API}developers"){
-                    parameter("since", timeline)
-                    headers{
-                        append("X-RapidAPI-Host",BuildConfig.RapidAPIHost)
-                        append("X-RapidAPI-Key",BuildConfig.RapidAPIKey)
+            Resource.Success(
+                data = httpClient.get().use {
+                    it.get("${RAPID_BASE_API}repositories") {
+                        parameter("since", timeline)
+                        headers {
+                            append("X-RapidAPI-Host", BuildConfig.RapidAPIHost)
+                            append("X-RapidAPI-Key", BuildConfig.RapidAPIKey)
+                        }
                     }
                 }
-            })
-        }catch (e:Exception){
+            )
+        } catch (e: Exception) {
+            Resource.Error(message = e.message.toString())
+        }
+    }
+
+    suspend fun getTrendingDeveloper(timeline: String): Resource<List<TrendingDeveloperItem>> {
+        return try {
+            Resource.Success(
+                data = httpClient.get().use {
+                    it.get("${RAPID_BASE_API}developers") {
+                        parameter("since", timeline)
+                        headers {
+                            append("X-RapidAPI-Host", BuildConfig.RapidAPIHost)
+                            append("X-RapidAPI-Key", BuildConfig.RapidAPIKey)
+                        }
+                    }
+                }
+            )
+        } catch (e: Exception) {
             Resource.Error(message = e.message.toString())
         }
     }

@@ -14,10 +14,9 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import kotlinx.coroutines.launch
 
-
 @ExperimentalPagerApi
 @Composable
-fun Tabs(pagerState: PagerState,tabNames:List<String>) {
+fun Tabs(pagerState: PagerState, tabNames: List<String>) {
     val scope = rememberCoroutineScope()
 
     TabRow(
@@ -34,7 +33,7 @@ fun Tabs(pagerState: PagerState,tabNames:List<String>) {
             )
         }
     ) {
-        tabNames.forEachIndexed { index, _->
+        tabNames.forEachIndexed { index, _ ->
             Tab(
                 text = {
                     Text(

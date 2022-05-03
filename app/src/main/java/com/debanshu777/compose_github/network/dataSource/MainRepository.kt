@@ -15,15 +15,15 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(
     private val remoteRepository: RemoteRepository,
     private val localRepository: LocalRepository
-    ) {
-    suspend fun getRepositoryById(id: Long): RepositoryFollow?{
+) {
+    suspend fun getRepositoryById(id: Long): RepositoryFollow? {
         return localRepository.getRepositoryById(id)
     }
-    suspend fun getDeveloperById(Id: Long): DeveloperFollow?{
-        return localRepository.getDeveloperById(Id);
+    suspend fun getDeveloperById(Id: Long): DeveloperFollow? {
+        return localRepository.getDeveloperById(Id)
     }
 
-    suspend fun getRepositoryByName(name: String): RepositoryFollow?{
+    suspend fun getRepositoryByName(name: String): RepositoryFollow? {
         return localRepository.getRepositoryByName(name)
     }
     suspend fun getDeveloperByName(name: String): DeveloperFollow? {
@@ -56,7 +56,7 @@ class MainRepository @Inject constructor(
         stars: Long
     ) {
         return localRepository.insertRepository(
-            id, authorName,name,avatar,description,language,languageColor,forks, stars
+            id, authorName, name, avatar, description, language, languageColor, forks, stars
         )
     }
 
@@ -67,23 +67,23 @@ class MainRepository @Inject constructor(
         avatar: String
     ) {
         return localRepository.insertDeveloper(
-            id, userName,name,avatar
+            id, userName, name, avatar
         )
     }
 
-    suspend fun getUserData(userId:String): Resource<GitHubUserResponse> {
+    suspend fun getUserData(userId: String): Resource<GitHubUserResponse> {
         return remoteRepository.getUserData(userId)
     }
 
-    suspend fun searchUser(searchText:String): Resource<GitHubSearchResponse> {
+    suspend fun searchUser(searchText: String): Resource<GitHubSearchResponse> {
         return remoteRepository.searchUser(searchText)
     }
 
-    suspend fun getTrendingRepository(timeline:String): Resource<List<TrendingRepositoryItem>> {
+    suspend fun getTrendingRepository(timeline: String): Resource<List<TrendingRepositoryItem>> {
         return remoteRepository.getTrendingRepository(timeline)
     }
 
-    suspend fun getTrendingDeveloper(timeline:String): Resource<List<TrendingDeveloperItem>> {
+    suspend fun getTrendingDeveloper(timeline: String): Resource<List<TrendingDeveloperItem>> {
         return remoteRepository.getTrendingDeveloper(timeline)
     }
 }
