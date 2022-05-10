@@ -3,16 +3,23 @@ package com.debanshu777.compose_github.network.dataSource
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.debanshu777.compose_github.ui.feature_follow.state.DeveloperFollowState
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
+import com.debanshu777.compose_github.ui.feature_trending.components.DeveloperCard
 import com.debanshu777.compose_github.ui.feature_trending.state.DeveloperTrendingState
 import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendingState
 import com.debanshu777.compose_github.utils.Resource
+import composedb.githubDB.DeveloperFollow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,11 +28,14 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     val userDataState = MutableStateFlow(ProfileState())
     val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
     val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
+    val developerList= mainRepository.getAllDeveloper()
+    val repositoryList= mainRepository.getAllRepository()
     val searchState = MutableStateFlow(SearchState())
 
     init {
         getTrendingRepository("monthly")
         getTrendingDeveloper("monthly")
+        //followDeveloperDataState.value= DeveloperFollowState(isLoading = false, data = developerList)
     }
     private val _searchWidgetState: MutableState<SearchWidgetState> =
         mutableStateOf(value = SearchWidgetState.CLOSED)
@@ -102,5 +112,31 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
                 trendingDeveloperDataState.value = DeveloperTrendingState(error = result.message)
             }
         }
+    }
+    fun insertDeveloper(
+        id: Long?,
+        userName: String,
+        name: String,
+        avatar: String
+    )= viewModelScope.launch {
+        mainRepository.insertDeveloper(
+            id,userName,name,avatar
+        )
+    }
+
+    fun insertRepository(
+        id: Long?,
+        authorName: String,
+        name: String,
+        avatar: String,
+        description: String,
+        language: String,
+        languageColor: String,
+        forks: Long,
+        stars: Long
+    )= viewModelScope.launch {
+        mainRepository.insertRepository(
+            id, authorName, name, avatar, description, language, languageColor, forks, stars
+        )
     }
 }

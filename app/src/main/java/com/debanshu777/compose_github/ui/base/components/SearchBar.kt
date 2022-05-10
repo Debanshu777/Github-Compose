@@ -29,7 +29,7 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
-        elevation = AppBarDefaults.TopAppBarElevation
+        elevation = 0.dp
     ) {
         TextField(
             modifier = Modifier.fillMaxWidth(),

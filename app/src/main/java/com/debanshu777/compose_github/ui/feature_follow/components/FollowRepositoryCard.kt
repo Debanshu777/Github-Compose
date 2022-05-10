@@ -1,4 +1,4 @@
-package com.debanshu777.compose_github.ui.feature_trending.components
+package com.debanshu777.compose_github.ui.feature_follow.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
@@ -31,10 +31,11 @@ import coil.compose.AsyncImage
 import com.debanshu777.compose_github.R
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
+import composedb.githubDB.RepositoryFollow
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hiltViewModel()) {
+fun FollowRepositoryCard(item: RepositoryFollow) {
     Card(
         modifier = Modifier.height(180.dp)
     ) {
@@ -88,13 +89,13 @@ fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hil
                     )
                 }
                 Text(
-                    text = item.name ?: "NA",
+                    text = item.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
                 )
                 Text(
-                    text = "@${item.author}",
+                    text = "@${item.authorName}",
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -131,33 +132,6 @@ fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hil
                             text = item.language ?: "NA",
                             fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                         )
-                    }
-                    Surface(
-                        shape = CircleShape,
-                        modifier = Modifier
-                            .padding(6.dp)
-                            .size(32.dp),
-                        color = Color(0x1A000000)
-                    ) {
-                        var isFavorite by remember { mutableStateOf(false) }
-
-                        IconToggleButton(
-                            checked = isFavorite,
-                            onCheckedChange = {
-                                isFavorite = !isFavorite
-                                viewModel.insertRepository(null,item.author?:"NA",item.name?:"NA",item.avatar?:"",item.description?:"NA",item.language?:"NA",item.languageColor?:"NA",item.forks!!.toLong(),item.stars!!.toLong())
-                            }
-                        ) {
-                            Icon(
-                                tint = Color(0xffE91E63),
-                                imageVector = if (isFavorite) {
-                                    Icons.Filled.Favorite
-                                } else {
-                                    Icons.Default.FavoriteBorder
-                                },
-                                contentDescription = null
-                            )
-                        }
                     }
                 }
             }

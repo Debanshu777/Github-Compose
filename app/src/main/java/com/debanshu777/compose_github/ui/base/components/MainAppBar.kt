@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.debanshu777.compose_github.ui.base.components.SearchBar
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 
@@ -50,7 +51,8 @@ fun DefaultAppBar(onSearchClick: () -> Unit) {
                     contentDescription = "Search Icon"
                 )
             }
-        }
+        },
+        elevation=0.dp
     )
 }
 
