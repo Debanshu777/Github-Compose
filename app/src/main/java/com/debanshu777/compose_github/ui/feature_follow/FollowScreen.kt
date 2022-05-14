@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.base.components.tabHandler.TabHandler
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -24,7 +25,7 @@ import composedb.githubDB.DeveloperFollow
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun FollowScreen(viewModel:GitHubViewModel= hiltViewModel()) {
+fun FollowScreen(navController: NavController,viewModel:GitHubViewModel= hiltViewModel()) {
     // val trendingDeveloperDataState by viewModel.trendingDeveloperDataState.collectAsState()
     val developerFollowList by viewModel.developerList.collectAsState(emptyList())
     val repositoryFollowList by viewModel.repositoryList.collectAsState(emptyList())
@@ -32,5 +33,5 @@ fun FollowScreen(viewModel:GitHubViewModel= hiltViewModel()) {
     val pageCount = 2
     val tabList = listOf("Repository", "Developer")
     val dataList = listOf(repositoryFollowList,developerFollowList)
-    TabHandler(pagerState, pageCount, tabList, dataList)
+    TabHandler(pagerState, pageCount, tabList, dataList,navController)
 }

@@ -20,10 +20,10 @@ fun Navigation(viewModel: GitHubViewModel, navController: NavHostController) {
             ProfileScreen(viewModel)
         }
         composable(route = Screen.TrendingScreen.route) {
-            TrendingScreen(viewModel)
+            TrendingScreen(viewModel,navController)
         }
         composable(route = Screen.FollowScreen.route) {
-            FollowScreen()
+            FollowScreen(navController)
         }
     }
 }

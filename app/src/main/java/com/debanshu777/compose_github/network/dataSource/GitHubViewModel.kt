@@ -18,14 +18,21 @@ import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendi
 import com.debanshu777.compose_github.utils.Resource
 import composedb.githubDB.DeveloperFollow
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GitHubViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
-    val userDataState = MutableStateFlow(ProfileState())
+    private val _userDataState = MutableLiveData(ProfileState())
+    val userDataState:LiveData<ProfileState> = _userDataState
     val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
     val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
     val developerList= mainRepository.getAllDeveloper()
@@ -35,7 +42,6 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     init {
         getTrendingRepository("monthly")
         getTrendingDeveloper("monthly")
-        //followDeveloperDataState.value= DeveloperFollowState(isLoading = false, data = developerList)
     }
     private val _searchWidgetState: MutableState<SearchWidgetState> =
         mutableStateOf(value = SearchWidgetState.CLOSED)
@@ -56,13 +62,13 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     fun getUserData(userName: String) = viewModelScope.launch {
         when (val result = mainRepository.getUserData(userName)) {
             is Resource.Loading -> {
-                userDataState.value = ProfileState(isLoading = true)
+                _userDataState.value = ProfileState(isLoading = true)
             }
             is Resource.Success -> {
-                userDataState.value = ProfileState(data = result.data)
+                _userDataState.value = ProfileState(data = result.data)
             }
             is Resource.Error -> {
-                searchState.value = SearchState(error = result.message)
+                _userDataState.value = ProfileState(error = result.message)
             }
         }
     }

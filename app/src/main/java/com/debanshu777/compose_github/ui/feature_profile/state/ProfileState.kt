@@ -6,4 +6,12 @@ data class ProfileState(
     val isLoading: Boolean = false,
     val data: GitHubUserResponse? = null,
     val error: String? = ""
-)
+){
+    override fun equals(other: Any?): Boolean {
+        return false
+    }
+
+    override fun hashCode(): Int {
+        return data?.hashCode() ?: 0
+    }
+}

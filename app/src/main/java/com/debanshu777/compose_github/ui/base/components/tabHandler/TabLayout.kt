@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
 import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 import com.debanshu777.compose_github.ui.feature_follow.components.FollowDeveloperCard
@@ -18,7 +19,7 @@ import composedb.githubDB.DeveloperFollow
 import composedb.githubDB.RepositoryFollow
 
 @Composable
-fun <T> TabLayout(data: List<T>) {
+fun <T> TabLayout(data: List<T>, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -41,7 +42,7 @@ fun <T> TabLayout(data: List<T>) {
                     FollowRepositoryCard(item)
                 }
                 if (item is TrendingDeveloperItem) {
-                    DeveloperCard(item)
+                    DeveloperCard(item,navController)
                 }
                 Spacer(modifier = Modifier.height(5.dp))
             }

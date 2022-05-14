@@ -70,9 +70,9 @@ object AppModule {
                 level = LogLevel.ALL
             }
             install(HttpTimeout) {
-                socketTimeoutMillis = 30_000
-                requestTimeoutMillis = 30_000
-                connectTimeoutMillis = 30_000
+                socketTimeoutMillis = 30_0000
+                requestTimeoutMillis = 30_0000
+                connectTimeoutMillis = 30_0000
             }
             defaultRequest {
                 contentType(ContentType.Application.Json)

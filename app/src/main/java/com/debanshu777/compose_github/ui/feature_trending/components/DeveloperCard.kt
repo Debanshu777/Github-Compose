@@ -29,13 +29,15 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
+import com.debanshu777.compose_github.ui.base.Screen
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun DeveloperCard(item: TrendingDeveloperItem,viewModel: GitHubViewModel = hiltViewModel()) {
+fun DeveloperCard(item: TrendingDeveloperItem, navController: NavController, viewModel: GitHubViewModel = hiltViewModel()) {
     Card(
         modifier = Modifier.height(180.dp)
     ) {
@@ -43,9 +45,12 @@ fun DeveloperCard(item: TrendingDeveloperItem,viewModel: GitHubViewModel = hiltV
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 5.dp,vertical=5.dp)
-                .clickable { },
-            verticalAlignment = Alignment.Top
+                .padding(horizontal = 5.dp,vertical=5.dp),
+//                .clickable {
+//                    item.username?.let { it1 -> viewModel.getUserData(it1) }
+//                    navController.navigate(Screen.ProfileScreen.route)
+//                },
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
                 modifier = Modifier

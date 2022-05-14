@@ -31,7 +31,6 @@ import com.debanshu777.compose_github.ui.feature_search.components.Card
 @Composable
 fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
     val searchData by viewModel.searchState.collectAsState()
-    Scaffold() {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(10.dp)
@@ -51,7 +50,6 @@ fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
                             },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Greeting(item.toString())
                         BadgedBox(
                             modifier = Modifier.padding(start = 10.dp),
                             badge = {
@@ -83,6 +81,6 @@ fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
                     }
                 }
             }
-        }
+
     }
 }
