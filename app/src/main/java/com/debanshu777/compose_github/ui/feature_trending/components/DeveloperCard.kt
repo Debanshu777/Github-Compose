@@ -1,7 +1,15 @@
 package com.debanshu777.compose_github.ui.feature_trending.components
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -20,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -33,19 +40,19 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
-import com.debanshu777.compose_github.ui.base.Screen
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun DeveloperCard(item: TrendingDeveloperItem, navController: NavController, viewModel: GitHubViewModel = hiltViewModel()) {
     Card(
-        modifier = Modifier.height(180.dp)
+        modifier = Modifier.height(160.dp),
+        elevation = 5.dp,
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 5.dp,vertical=5.dp),
+                .padding(horizontal = 5.dp),
 //                .clickable {
 //                    item.username?.let { it1 -> viewModel.getUserData(it1) }
 //                    navController.navigate(Screen.ProfileScreen.route)
@@ -90,41 +97,47 @@ fun DeveloperCard(item: TrendingDeveloperItem, navController: NavController, vie
                 )
                 Spacer(modifier = Modifier.height(3.dp))
                 Text(
+                    modifier = Modifier.width(250.dp),
                     text = item.repo.description ?: "NA",
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
                 )
-                Row(
-                    modifier=Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Surface(
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .padding(6.dp)
+                        .size(32.dp),
+                    color = Color(0x1A000000)
                 ) {
-                    Surface(
-                        shape = CircleShape,
-                        modifier = Modifier
-                            .padding(6.dp)
-                            .size(32.dp),
-                        color = Color(0x1A000000)
-                    ) {
-                        var isFavorite by remember { mutableStateOf(false) }
+                    var isFavorite by remember { mutableStateOf(false) }
 
-                        IconToggleButton(
-                            checked = isFavorite,
-                            onCheckedChange = {
-                                isFavorite = !isFavorite
-                                viewModel.insertDeveloper(null,item.username?:"NA",item.name?:"NA",item.avatar?:"")
-                            }
-                        ) {
-                            Icon(
-                                tint = Color(0xffE91E63),
-                                imageVector = if (isFavorite) {
-                                    Icons.Filled.Favorite
-                                } else {
-                                    Icons.Default.FavoriteBorder
-                                },
-                                contentDescription = null
+                    IconToggleButton(
+                        checked = isFavorite,
+                        onCheckedChange = {
+                            isFavorite = !isFavorite
+                            viewModel.insertDeveloper(
+                                null,
+                                item.username ?: "NA",
+                                item.name ?: "NA",
+                                item.avatar ?: ""
                             )
                         }
+                    ) {
+                        Icon(
+                            tint = Color(0xffE91E63),
+                            imageVector = if (isFavorite) {
+                                Icons.Filled.Favorite
+                            } else {
+                                Icons.Default.FavoriteBorder
+                            },
+                            contentDescription = null
+                        )
                     }
                 }
             }

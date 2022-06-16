@@ -2,9 +2,22 @@ package com.debanshu777.compose_github.ui.feature_trending.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconToggleButton
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -36,13 +49,14 @@ import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 @Composable
 fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hiltViewModel()) {
     Card(
-        modifier = Modifier.height(180.dp)
+        modifier = Modifier.height(165.dp),
+        elevation = 5.dp,
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 5.dp,vertical=5.dp)
+                .padding(horizontal = 5.dp)
                 .clickable {
                 },
             verticalAlignment = Alignment.CenterVertically
@@ -108,7 +122,9 @@ fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hil
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth().height(50.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {

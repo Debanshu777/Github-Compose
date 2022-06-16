@@ -10,9 +10,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AccountBox
+import androidx.compose.material.icons.outlined.Create
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -25,11 +31,9 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
-import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
@@ -38,7 +42,7 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(5.dp),
+            .padding(15.dp),
         horizontalAlignment = Alignment.Start
     ) {
         Row(
@@ -65,24 +69,24 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
                 Column {
                     Text(
                         text = "Followers",
-                        fontSize = TextUnit(value = 18F, type = TextUnitType.Sp),
+                        fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
                     )
                     Text(
                         text = "${profileData?.data?.followers ?: "0"}",
                         fontWeight = FontWeight.Bold,
-                        fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                        fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
                     )
                 }
                 Spacer(modifier = Modifier.width(14.dp))
                 Column {
                     Text(
                         text = "Following",
-                        fontSize = TextUnit(value = 18F, type = TextUnitType.Sp),
+                        fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
                     )
                     Text(
                         text = "${profileData?.data?.following ?: "0"}",
                         fontWeight = FontWeight.Bold,
-                        fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                        fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
                     )
                 }
             }
@@ -91,16 +95,17 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
             text = profileData?.data?.name ?: "NA",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.W300,
             fontSize = TextUnit(value = 24F, type = TextUnitType.Sp),
         )
         Text(
             text = "@${profileData?.data?.login ?: "NA"}",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            fontSize = TextUnit(value = 18F, type = TextUnitType.Sp),
+            fontWeight = FontWeight.Bold,
+            fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
         )
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(5.dp))
         profileData?.data?.bio.let {
             Text(
                 text = profileData?.data?.bio ?: "",
@@ -109,20 +114,17 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
                 fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
             )
         }
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(5.dp))
         profileData?.data?.company.let {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Company",
-                    fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
-                )
+                Icon(Icons.Outlined.AccountBox, contentDescription = "Icon Company")
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = profileData?.data?.company ?: "NA",
                     maxLines = 1,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
@@ -132,15 +134,12 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Location",
-                    fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
-                )
+                Icon(Icons.Outlined.LocationOn, contentDescription = "Icon Location")
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = profileData?.data?.location ?: "NA",
                     maxLines = 1,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
@@ -150,15 +149,12 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Email",
-                    fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
-                )
+                Icon(Icons.Outlined.Email, contentDescription = "Icon Company")
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = profileData?.data?.email ?: "NA",
                     maxLines = 1,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
@@ -168,15 +164,12 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Blog",
-                    fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
-                )
+                Icon(Icons.Outlined.Create, contentDescription = "Icon Company")
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = profileData?.data?.blog ?: "NA",
                     maxLines = 1,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
@@ -186,15 +179,12 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Twitter",
-                    fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
-                )
+                Icon(Icons.Outlined.Info, contentDescription = "Icon Company")
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = "@${profileData?.data?.twitterUsername ?: "NA"}",
                     maxLines = 1,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.W500,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )

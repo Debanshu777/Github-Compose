@@ -28,7 +28,8 @@ import composedb.githubDB.DeveloperFollow
 @Composable
 fun FollowDeveloperCard(item:DeveloperFollow){
     Card(
-        modifier = Modifier.height(110.dp)
+        modifier = Modifier.height(110.dp),
+        elevation = 5.dp,
     ) {
         Row(
             modifier = Modifier
