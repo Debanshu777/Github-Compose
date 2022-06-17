@@ -1,15 +1,19 @@
 package com.debanshu777.compose_github.network.dataSource.remote
 
 import com.debanshu777.compose_github.BuildConfig
-import com.debanshu777.compose_github.network.model.*
+import com.debanshu777.compose_github.network.model.GitHubSearchResponse
+import com.debanshu777.compose_github.network.model.GitHubUserResponse
+import com.debanshu777.compose_github.network.model.PinnedUserProjectItem
+import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
+import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 import com.debanshu777.compose_github.utils.Constant.GITHUB_BASE_URL
+import com.debanshu777.compose_github.utils.Constant.PINNED_PROJECT_URL
 import com.debanshu777.compose_github.utils.Constant.RAPID_BASE_API
 import com.debanshu777.compose_github.utils.Resource
 import io.ktor.client.*
 import io.ktor.client.request.*
 import javax.inject.Inject
 import javax.inject.Provider
-import kotlin.io.use
 
 class RemoteRepository @Inject constructor() {
     @Inject lateinit var httpClient: Provider<HttpClient>
@@ -67,6 +71,20 @@ class RemoteRepository @Inject constructor() {
                             append("X-RapidAPI-Host", BuildConfig.RapidAPIHost)
                             append("X-RapidAPI-Key", BuildConfig.RapidAPIKey)
                         }
+                    }
+                }
+            )
+        } catch (e: Exception) {
+            Resource.Error(message = e.message.toString())
+        }
+    }
+
+    suspend fun getUserPinnedProject(username: String): Resource<List<PinnedUserProjectItem>> {
+        return try {
+            Resource.Success(
+                data = httpClient.get().use {
+                    it.get(PINNED_PROJECT_URL) {
+                        parameter("username", username)
                     }
                 }
             )

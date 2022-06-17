@@ -38,7 +38,7 @@ import composedb.githubDB.RepositoryFollow
 @Composable
 fun FollowRepositoryCard(item: RepositoryFollow) {
     Card(
-        modifier = Modifier.height(180.dp),
+        modifier = Modifier.height(160.dp),
         elevation = 5.dp,
     ) {
         Row(

@@ -6,37 +6,31 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.debanshu777.compose_github.ui.feature_follow.state.DeveloperFollowState
+import com.debanshu777.compose_github.ui.feature_profile.state.PinnedProjectState
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
-import com.debanshu777.compose_github.ui.feature_trending.components.DeveloperCard
 import com.debanshu777.compose_github.ui.feature_trending.state.DeveloperTrendingState
 import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendingState
 import com.debanshu777.compose_github.utils.Resource
-import composedb.githubDB.DeveloperFollow
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GitHubViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
     private val _userDataState = MutableLiveData(ProfileState())
-    val userDataState:LiveData<ProfileState> = _userDataState
+    val userDataState: LiveData<ProfileState> = _userDataState
+
+    private val _userPinnedImage = MutableLiveData(PinnedProjectState())
+    val userPinnedState: LiveData<PinnedProjectState> = _userPinnedImage
+
     val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
     val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
-    val developerList= mainRepository.getAllDeveloper()
-    val repositoryList= mainRepository.getAllRepository()
+    val developerList = mainRepository.getAllDeveloper()
+    val repositoryList = mainRepository.getAllRepository()
     val searchState = MutableStateFlow(SearchState())
 
     init {
@@ -65,6 +59,7 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
                 _userDataState.value = ProfileState(isLoading = true)
             }
             is Resource.Success -> {
+                getPinnedProject(userName)
                 _userDataState.value = ProfileState(data = result.data)
             }
             is Resource.Error -> {
@@ -78,10 +73,25 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
                 searchState.value = SearchState(isLoading = true)
             }
             is Resource.Success -> {
-                searchState.value = SearchState(data = if (result.data == null) emptyList() else result.data.items)
+                searchState.value =
+                    SearchState(data = if (result.data == null) emptyList() else result.data.items)
             }
             is Resource.Error -> {
                 searchState.value = SearchState(error = result.message)
+            }
+        }
+    }
+
+    fun getPinnedProject(username: String) = viewModelScope.launch {
+        when (val result = mainRepository.getUserPinnedProject(username)) {
+            is Resource.Loading -> {
+                _userPinnedImage.value = PinnedProjectState(isLoading = true)
+            }
+            is Resource.Success -> {
+                _userPinnedImage.value = PinnedProjectState(data = result.data ?: emptyList())
+            }
+            is Resource.Error -> {
+                _userPinnedImage.value = PinnedProjectState(error = result.message)
             }
         }
     }

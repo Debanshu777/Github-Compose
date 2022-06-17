@@ -6,17 +6,17 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.base.components.tabHandler.TabHandler
-import com.google.accompanist.pager.*
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TrendingScreen(viewModel: GitHubViewModel, navController: NavController) {
     val trendingRepositoryDataState by viewModel.trendingRepositoryDataState.collectAsState()
     val trendingDeveloperDataState by viewModel.trendingDeveloperDataState.collectAsState()
-
     val pagerState = rememberPagerState(0)
     val pageCount = 2
     val tabList = listOf("Repository", "Developer")
     val dataList = listOf(trendingRepositoryDataState.data, trendingDeveloperDataState.data)
-    TabHandler(pagerState, pageCount, tabList, dataList,navController)
+    TabHandler(pagerState, pageCount, tabList, dataList, navController)
 }

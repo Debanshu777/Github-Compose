@@ -47,7 +47,7 @@ import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hiltViewModel()) {
+fun RepositoryCard(item: TrendingRepositoryItem, viewModel: GitHubViewModel = hiltViewModel()) {
     Card(
         modifier = Modifier.height(165.dp),
         elevation = 5.dp,
@@ -71,7 +71,7 @@ fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hil
                 contentDescription = "User Avatar"
             )
             Column(
-                modifier = Modifier.padding(horizontal=8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -130,7 +130,7 @@ fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hil
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
-                    ){
+                    ) {
                         Canvas(
                             modifier = Modifier
                                 .height(10.dp)
@@ -161,7 +161,17 @@ fun RepositoryCard(item: TrendingRepositoryItem,viewModel: GitHubViewModel = hil
                             checked = isFavorite,
                             onCheckedChange = {
                                 isFavorite = !isFavorite
-                                viewModel.insertRepository(null,item.author?:"NA",item.name?:"NA",item.avatar?:"",item.description?:"NA",item.language?:"NA",item.languageColor?:"NA",item.forks!!.toLong(),item.stars!!.toLong())
+                                viewModel.insertRepository(
+                                    null,
+                                    item.author ?: "NA",
+                                    item.name ?: "NA",
+                                    item.avatar ?: "",
+                                    item.description ?: "NA",
+                                    item.language ?: "NA",
+                                    item.languageColor ?: "NA",
+                                    item.forks!!.toLong(),
+                                    item.stars!!.toLong()
+                                )
                             }
                         ) {
                             Icon(

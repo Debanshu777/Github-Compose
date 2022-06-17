@@ -1,13 +1,18 @@
 package com.debanshu777.compose_github.ui.feature_search
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -58,7 +65,7 @@ fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
                                         modifier = Modifier
                                             .height(10.dp)
                                             .width(10.dp),
-                                        backgroundColor = Color.Blue
+                                        backgroundColor = Color.Cyan
                                     )
                                 }
                             }
@@ -75,8 +82,11 @@ fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
                         }
                         Text(
                             modifier = Modifier.padding(20.dp),
-                            text = "@${item.login}",
-                            fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
+                            text = "@${item.login ?: "NA"}",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = TextUnit(value = 18F, type = TextUnitType.Sp),
                         )
                     }
                 }

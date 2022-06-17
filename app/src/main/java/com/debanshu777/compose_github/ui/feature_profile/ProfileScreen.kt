@@ -37,8 +37,9 @@ import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
+fun ProfileScreen(viewModel: GitHubViewModel = hiltViewModel()) {
     val profileData by viewModel.userDataState.observeAsState()
+    val userPinnedProject by viewModel.userPinnedState.observeAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,10 +47,10 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
         horizontalAlignment = Alignment.Start
     ) {
         Row(
-            modifier= Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 15.dp),
-            verticalAlignment=Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             AsyncImage(
@@ -62,8 +63,8 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
                 contentDescription = "User Avatar"
             )
             Row(
-                modifier=Modifier.fillMaxWidth(),
-                verticalAlignment=Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
                 Column {
@@ -189,6 +190,9 @@ fun ProfileScreen(viewModel: GitHubViewModel= hiltViewModel()) {
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
             }
+        }
+        userPinnedProject?.data.let {
+            Text(text = userPinnedProject?.data.toString())
         }
     }
 }

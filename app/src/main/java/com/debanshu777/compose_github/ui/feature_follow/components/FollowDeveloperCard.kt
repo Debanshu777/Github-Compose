@@ -26,7 +26,7 @@ import composedb.githubDB.DeveloperFollow
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun FollowDeveloperCard(item:DeveloperFollow){
+fun FollowDeveloperCard(item: DeveloperFollow) {
     Card(
         modifier = Modifier.height(110.dp),
         elevation = 5.dp,

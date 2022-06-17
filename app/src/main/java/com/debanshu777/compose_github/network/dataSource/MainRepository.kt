@@ -4,6 +4,7 @@ import com.debanshu777.compose_github.network.dataSource.local.LocalRepository
 import com.debanshu777.compose_github.network.dataSource.remote.RemoteRepository
 import com.debanshu777.compose_github.network.model.GitHubSearchResponse
 import com.debanshu777.compose_github.network.model.GitHubUserResponse
+import com.debanshu777.compose_github.network.model.PinnedUserProjectItem
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
 import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
 import com.debanshu777.compose_github.utils.Resource
@@ -85,5 +86,9 @@ class MainRepository @Inject constructor(
 
     suspend fun getTrendingDeveloper(timeline: String): Resource<List<TrendingDeveloperItem>> {
         return remoteRepository.getTrendingDeveloper(timeline)
+    }
+
+    suspend fun getUserPinnedProject(userName: String): Resource<List<PinnedUserProjectItem>> {
+        return remoteRepository.getUserPinnedProject(userName)
     }
 }
