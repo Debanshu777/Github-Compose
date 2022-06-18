@@ -7,6 +7,7 @@ import com.debanshu777.compose_github.network.model.GitHubUserResponse
 import com.debanshu777.compose_github.network.model.PinnedUserProjectItem
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
 import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
+import com.debanshu777.compose_github.network.model.userStats.UserStats
 import com.debanshu777.compose_github.utils.Resource
 import composedb.githubDB.DeveloperFollow
 import composedb.githubDB.RepositoryFollow
@@ -90,5 +91,9 @@ class MainRepository @Inject constructor(
 
     suspend fun getUserPinnedProject(userName: String): Resource<List<PinnedUserProjectItem>> {
         return remoteRepository.getUserPinnedProject(userName)
+    }
+
+    suspend fun getUserStats(username: String): Resource<UserStats> {
+        return remoteRepository.getUserStats(username)
     }
 }

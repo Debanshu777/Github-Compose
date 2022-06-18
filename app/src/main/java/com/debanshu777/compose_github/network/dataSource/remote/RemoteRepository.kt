@@ -6,9 +6,11 @@ import com.debanshu777.compose_github.network.model.GitHubUserResponse
 import com.debanshu777.compose_github.network.model.PinnedUserProjectItem
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
 import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
+import com.debanshu777.compose_github.network.model.userStats.UserStats
 import com.debanshu777.compose_github.utils.Constant.GITHUB_BASE_URL
 import com.debanshu777.compose_github.utils.Constant.PINNED_PROJECT_URL
 import com.debanshu777.compose_github.utils.Constant.RAPID_BASE_API
+import com.debanshu777.compose_github.utils.Constant.USER_STATS_URL
 import com.debanshu777.compose_github.utils.Resource
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -86,6 +88,18 @@ class RemoteRepository @Inject constructor() {
                     it.get(PINNED_PROJECT_URL) {
                         parameter("username", username)
                     }
+                }
+            )
+        } catch (e: Exception) {
+            Resource.Error(message = e.message.toString())
+        }
+    }
+
+    suspend fun getUserStats(username: String): Resource<UserStats> {
+        return try {
+            Resource.Success(
+                data = httpClient.get().use {
+                    it.get("${USER_STATS_URL}${username}")
                 }
             )
         } catch (e: Exception) {

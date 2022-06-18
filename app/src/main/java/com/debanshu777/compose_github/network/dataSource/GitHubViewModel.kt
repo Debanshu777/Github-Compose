@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.debanshu777.compose_github.ui.feature_profile.state.PinnedProjectState
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
+import com.debanshu777.compose_github.ui.feature_profile.state.ProfileStatsState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 import com.debanshu777.compose_github.ui.feature_trending.state.DeveloperTrendingState
@@ -26,6 +27,9 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
 
     private val _userPinnedImage = MutableLiveData(PinnedProjectState())
     val userPinnedState: LiveData<PinnedProjectState> = _userPinnedImage
+
+    private val _userStatsState = MutableLiveData(ProfileStatsState())
+    val userStatsState: LiveData<ProfileStatsState> = _userStatsState
 
     val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
     val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
@@ -59,6 +63,7 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
                 _userDataState.value = ProfileState(isLoading = true)
             }
             is Resource.Success -> {
+                getUserStats(userName)
                 getPinnedProject(userName)
                 _userDataState.value = ProfileState(data = result.data)
             }
@@ -78,6 +83,20 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
             }
             is Resource.Error -> {
                 searchState.value = SearchState(error = result.message)
+            }
+        }
+    }
+
+    fun getUserStats(username: String) = viewModelScope.launch {
+        when (val result = mainRepository.getUserStats(username)) {
+            is Resource.Loading -> {
+                _userStatsState.value = ProfileStatsState(isLoading = true)
+            }
+            is Resource.Success -> {
+                _userStatsState.value = ProfileStatsState(data = result.data)
+            }
+            is Resource.Error -> {
+                _userStatsState.value = ProfileStatsState(error = result.message)
             }
         }
     }
@@ -129,6 +148,7 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
             }
         }
     }
+
     fun insertDeveloper(
         id: Long?,
         userName: String,

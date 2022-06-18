@@ -119,6 +119,9 @@ dependencies {
     //SQLDelight
     implementation "com.squareup.sqldelight:android-driver:1.5.3"
     implementation "com.squareup.sqldelight:coroutines-extensions-jvm:1.5.3"
+
+    //AndroidSVG
+    implementation 'com.caverock:androidsvg-aar:1.4'
 }
 
 sqldelight{

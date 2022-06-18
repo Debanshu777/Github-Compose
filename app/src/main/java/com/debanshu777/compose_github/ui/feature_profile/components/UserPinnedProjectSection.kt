@@ -78,6 +78,7 @@ fun UserPinnedProjectSectionItem(pinnedUserProjectItem: PinnedUserProjectItem) {
                         modifier = Modifier.padding(7.dp),
                         text = pinnedUserProjectItem.repo ?: "",
                         maxLines = 1,
+                        fontWeight = FontWeight.Bold,
                         overflow = TextOverflow.Ellipsis,
                         fontSize = TextUnit(value = 16F, type = TextUnitType.Sp),
                     )
