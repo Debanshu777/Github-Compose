@@ -1,6 +1,6 @@
 package com.debanshu777.compose_github.ui.base.components
 
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
@@ -15,7 +15,7 @@ fun BottomBar(navController: NavHostController) {
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    BottomAppBar {
+    NavigationBar {
         screens.forEach { screen ->
             AddItem(
                 screen = screen,

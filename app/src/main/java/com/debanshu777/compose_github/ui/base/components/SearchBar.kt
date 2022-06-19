@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -44,7 +43,7 @@ fun SearchBar(
             },
             placeholder = {
                 Text(
-                    modifier = Modifier.alpha(ContentAlpha.medium),
+                    modifier = Modifier.alpha(0.5f),
                     text = "Search here...",
                 )
             },
@@ -55,7 +54,7 @@ fun SearchBar(
             leadingIcon = {
                 IconButton(
                     modifier = Modifier
-                        .alpha(ContentAlpha.medium),
+                        .alpha(0.5f),
                     onClick = { }
                 ) {
                     Icon(

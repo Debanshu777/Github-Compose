@@ -1,10 +1,8 @@
 package com.debanshu777.compose_github.ui.base.components
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.ContentAlpha
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavDestination
@@ -19,7 +17,7 @@ fun RowScope.AddItem(
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {
-    BottomNavigationItem(
+    NavigationBarItem(
         label = {
             Text(text = screen.title)
         },
@@ -32,7 +30,6 @@ fun RowScope.AddItem(
         selected = currentDestination?.hierarchy?.any {
             it.route == screen.route
         } == true,
-        unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
         onClick = {
             navController.navigate(screen.route) {
                 popUpTo(navController.graph.findStartDestination().id)
