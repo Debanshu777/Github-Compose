@@ -3,7 +3,8 @@ package com.debanshu777.compose_github.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.base.MainScreen
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
             ComposeGithubTheme {
                 val viewModel: GitHubViewModel = hiltViewModel()
                 // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
+                Surface(color = MaterialTheme.colorScheme.background) {
                     MainScreen(viewModel)
                 }
             }

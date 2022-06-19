@@ -1,15 +1,17 @@
 package com.debanshu777.compose_github.ui.base
 
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.rememberNavController
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.base.components.BottomBar
-import com.debanshu777.compose_github.ui.feature_search.components.MainAppBar
+import com.debanshu777.compose_github.ui.base.components.MainAppBar
 import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModel: GitHubViewModel) {
     val navController = rememberNavController()
@@ -38,8 +40,7 @@ fun MainScreen(viewModel: GitHubViewModel) {
                 }
             )
         },
-        bottomBar = { BottomBar(navController = navController) }
-    ) {
-        Navigation(viewModel, navController)
-    }
+        bottomBar = { BottomBar(navController = navController) },
+        content = Navigation(viewModel, navController)
+    )
 }

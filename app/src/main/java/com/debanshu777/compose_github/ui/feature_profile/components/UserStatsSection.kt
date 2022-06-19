@@ -8,8 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +29,7 @@ import com.caverock.androidsvg.SVG
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileStatsState
 import com.debanshu777.compose_github.utils.Chart
 
-@OptIn(ExperimentalUnitApi::class)
+@OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun UserStatsSection(userStats: ProfileStatsState?) {
     val svgString =
@@ -47,10 +48,9 @@ fun UserStatsSection(userStats: ProfileStatsState?) {
             fontWeight = FontWeight.W300,
             fontSize = TextUnit(value = 18F, type = TextUnitType.Sp),
         )
-        Card(
+        ElevatedCard(
             modifier = Modifier
                 .padding(vertical = 5.dp),
-            elevation = 5.dp,
         ) {
             Column {
                 Row(
@@ -110,10 +110,9 @@ fun UserStatsSection(userStats: ProfileStatsState?) {
             fontWeight = FontWeight.W300,
             fontSize = TextUnit(value = 18F, type = TextUnitType.Sp),
         )
-        Card(
+        ElevatedCard(
             modifier = Modifier
                 .padding(vertical = 5.dp),
-            elevation = 5.dp,
         ) {
             ShowChart(userStats)
         }
