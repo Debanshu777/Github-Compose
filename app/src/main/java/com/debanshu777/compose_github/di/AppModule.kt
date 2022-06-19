@@ -16,12 +16,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -52,14 +53,14 @@ object AppModule {
 
     @Provides
     fun provideKtorAPIClient(): HttpClient {
-        val json = kotlinx.serialization.json.Json {
+        val jsonProps = Json {
             encodeDefaults = true
             ignoreUnknownKeys = true
             isLenient = true
         }
         return HttpClient(Android) {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(json)
+            install(ContentNegotiation) {
+                json(jsonProps)
             }
             install(Logging) {
                 logger = object : Logger {

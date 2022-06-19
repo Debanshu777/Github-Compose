@@ -13,6 +13,7 @@ import com.debanshu777.compose_github.utils.Constant.RAPID_BASE_API
 import com.debanshu777.compose_github.utils.Constant.USER_STATS_URL
 import com.debanshu777.compose_github.utils.Resource
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -23,7 +24,7 @@ class RemoteRepository @Inject constructor() {
         return try {
             Resource.Success(
                 data = httpClient.get().use {
-                    it.get("${GITHUB_BASE_URL}users/$userId")
+                    it.get("${GITHUB_BASE_URL}users/$userId").body()
                 }
             )
         } catch (e: Exception) {
@@ -37,7 +38,7 @@ class RemoteRepository @Inject constructor() {
                 data = httpClient.get().use {
                     it.get("${GITHUB_BASE_URL}search/users") {
                         parameter("q", searchText)
-                    }
+                    }.body()
                 }
             )
         } catch (e: Exception) {
@@ -56,7 +57,7 @@ class RemoteRepository @Inject constructor() {
                             append("X-RapidAPI-Key", BuildConfig.RapidAPIKey)
                         }
                     }
-                }
+                }.body()
             )
         } catch (e: Exception) {
             Resource.Error(message = e.message.toString())
@@ -74,7 +75,7 @@ class RemoteRepository @Inject constructor() {
                             append("X-RapidAPI-Key", BuildConfig.RapidAPIKey)
                         }
                     }
-                }
+                }.body()
             )
         } catch (e: Exception) {
             Resource.Error(message = e.message.toString())
@@ -88,7 +89,7 @@ class RemoteRepository @Inject constructor() {
                     it.get(PINNED_PROJECT_URL) {
                         parameter("username", username)
                     }
-                }
+                }.body()
             )
         } catch (e: Exception) {
             Resource.Error(message = e.message.toString())
@@ -100,7 +101,7 @@ class RemoteRepository @Inject constructor() {
             Resource.Success(
                 data = httpClient.get().use {
                     it.get("${USER_STATS_URL}${username}")
-                }
+                }.body()
             )
         } catch (e: Exception) {
             Resource.Error(message = e.message.toString())
