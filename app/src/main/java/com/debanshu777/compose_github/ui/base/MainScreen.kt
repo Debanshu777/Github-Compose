@@ -39,6 +39,9 @@ fun MainScreen(viewModel: GitHubViewModel) {
                 onSearchTriggered = {
                     navController.navigate(Screen.SearchScreen.route)
                     viewModel.updateSearchWidgetState(SearchWidgetState.OPENED)
+                },
+                onDurationTypeClick = {
+                    viewModel.updateDurationTypeFilterVisibility()
                 }
             )
         },

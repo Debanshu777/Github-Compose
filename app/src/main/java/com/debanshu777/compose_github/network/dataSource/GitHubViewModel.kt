@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.debanshu777.compose_github.ui.feature_profile.state.PinnedProjectState
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
@@ -14,6 +15,7 @@ import com.debanshu777.compose_github.ui.feature_search.state.SearchState
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 import com.debanshu777.compose_github.ui.feature_trending.state.DeveloperTrendingState
 import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendingState
+import com.debanshu777.compose_github.utils.DurationType
 import com.debanshu777.compose_github.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +23,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GitHubViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
+class GitHubViewModel @Inject constructor(private val mainRepository: MainRepository) :
+    ViewModel() {
     private val _userDataState = MutableLiveData(ProfileState())
     val userDataState: LiveData<ProfileState> = _userDataState
 
@@ -31,16 +34,17 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     private val _userStatsState = MutableLiveData(ProfileStatsState())
     val userStatsState: LiveData<ProfileStatsState> = _userStatsState
 
+    private val _durationType = MutableStateFlow(DurationType.WEEKLY)
+    val durationType: LiveData<DurationType> = _durationType.asLiveData()
+
+    private val _durationTypeFilterVisibility = MutableLiveData(false)
+    val durationTypeFilterVisibility: LiveData<Boolean> = _durationTypeFilterVisibility
+
     val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
     val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
     val developerList = mainRepository.getAllDeveloper()
     val repositoryList = mainRepository.getAllRepository()
     val searchState = MutableStateFlow(SearchState())
-
-    init {
-        getTrendingRepository("monthly")
-        getTrendingDeveloper("monthly")
-    }
     private val _searchWidgetState: MutableState<SearchWidgetState> =
         mutableStateOf(value = SearchWidgetState.CLOSED)
     val searchWidgetState: State<SearchWidgetState> = _searchWidgetState
@@ -49,8 +53,21 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
         mutableStateOf(value = "")
     val searchTextState: State<String> = _searchTextState
 
+    init {
+        getTrendingRepository(_durationType.value.type)
+        getTrendingDeveloper(_durationType.value.type)
+    }
+
     fun updateSearchWidgetState(newValue: SearchWidgetState) {
         _searchWidgetState.value = newValue
+    }
+
+    fun updateDurationType(type: DurationType) {
+        _durationType.value = type
+    }
+
+    fun updateDurationTypeFilterVisibility() {
+        _durationTypeFilterVisibility.value = !(durationTypeFilterVisibility.value ?: false)
     }
 
     fun updateSearchTextState(newValue: String) {
@@ -72,6 +89,7 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
             }
         }
     }
+
     fun searchUser(searchText: String) = viewModelScope.launch {
         when (val result = mainRepository.searchUser(searchText)) {
             is Resource.Loading -> {
@@ -154,9 +172,9 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
         userName: String,
         name: String,
         avatar: String
-    )= viewModelScope.launch {
+    ) = viewModelScope.launch {
         mainRepository.insertDeveloper(
-            id,userName,name,avatar
+            id, userName, name, avatar
         )
     }
 
@@ -170,7 +188,7 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
         languageColor: String,
         forks: Long,
         stars: Long
-    )= viewModelScope.launch {
+    ) = viewModelScope.launch {
         mainRepository.insertRepository(
             id, authorName, name, avatar, description, language, languageColor, forks, stars
         )

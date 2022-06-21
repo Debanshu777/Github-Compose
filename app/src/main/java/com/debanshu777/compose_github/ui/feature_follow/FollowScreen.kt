@@ -1,8 +1,12 @@
 package com.debanshu777.compose_github.ui.feature_follow
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
@@ -19,5 +23,7 @@ fun FollowScreen(navController: NavController, viewModel: GitHubViewModel = hilt
     val pageCount = 2
     val tabList = listOf("Repository", "Developer")
     val dataList = listOf(repositoryFollowList, developerFollowList)
-    TabHandler(pagerState, pageCount, tabList, dataList, navController)
+    Column(modifier = Modifier.padding(top = 56.dp)) {
+        TabHandler(pagerState, pageCount, tabList, dataList, navController)
+    }
 }

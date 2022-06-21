@@ -1,13 +1,13 @@
 package com.debanshu777.compose_github.ui.base.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 
 @Composable
@@ -17,12 +17,14 @@ fun MainAppBar(
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClick: (String) -> Unit,
-    onSearchTriggered: () -> Unit
+    onSearchTriggered: () -> Unit,
+    onDurationTypeClick: () -> Unit
 ) {
     when (searchWidgetState) {
         SearchWidgetState.CLOSED -> {
             DefaultAppBar(
-                onSearchClick = onSearchTriggered
+                onSearchClick = onSearchTriggered,
+                onDurationTypeClick = onDurationTypeClick,
             )
         }
         SearchWidgetState.OPENED -> {
@@ -37,12 +39,18 @@ fun MainAppBar(
 }
 
 @Composable
-fun DefaultAppBar(onSearchClick: () -> Unit) {
+fun DefaultAppBar(onSearchClick: () -> Unit, onDurationTypeClick: () -> Unit) {
     SmallTopAppBar(
         title = {
             Text(text = "GitHub")
         },
         actions = {
+            IconButton(onClick = { onDurationTypeClick() }) {
+                Icon(
+                    imageVector = Icons.Filled.FilterList,
+                    contentDescription = "Search Icon"
+                )
+            }
             IconButton(onClick = { onSearchClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Search,
@@ -51,10 +59,4 @@ fun DefaultAppBar(onSearchClick: () -> Unit) {
             }
         },
     )
-}
-
-@Composable
-@Preview
-fun SearchScreenPreview() {
-    DefaultAppBar(onSearchClick = {})
 }
