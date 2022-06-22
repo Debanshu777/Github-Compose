@@ -18,6 +18,7 @@ import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendi
 import com.debanshu777.compose_github.utils.DurationType
 import com.debanshu777.compose_github.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -64,6 +65,8 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
 
     fun updateDurationType(type: DurationType) {
         _durationType.value = type
+        getTrendingRepository(_durationType.value.type)
+        getTrendingDeveloper(_durationType.value.type)
     }
 
     fun updateDurationTypeFilterVisibility() {
@@ -75,13 +78,13 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     }
 
     fun getUserData(userName: String) = viewModelScope.launch {
+        async { getUserStats(userName) }
+        async { getPinnedProject(userName) }
         when (val result = mainRepository.getUserData(userName)) {
             is Resource.Loading -> {
                 _userDataState.value = ProfileState(isLoading = true)
             }
             is Resource.Success -> {
-                getUserStats(userName)
-                getPinnedProject(userName)
                 _userDataState.value = ProfileState(data = result.data)
             }
             is Resource.Error -> {

@@ -40,12 +40,16 @@ import com.debanshu777.compose_github.ui.base.Screen
 fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
     val searchData by viewModel.searchState.collectAsState()
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 56.dp),
             contentPadding = PaddingValues(10.dp)
         ) {
             items(searchData.data) { item ->
                 ElevatedCard(
-                    modifier = Modifier.height(120.dp)
+                    modifier = Modifier
+                        .height(120.dp)
+                        .padding(vertical = 5.dp)
                 ) {
                     Row(
                         modifier = Modifier

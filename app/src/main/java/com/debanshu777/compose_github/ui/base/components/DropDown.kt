@@ -30,10 +30,14 @@ import androidx.compose.ui.unit.toSize
 import com.debanshu777.compose_github.utils.DurationType
 
 @Composable
-fun DropDownMenu(visible: Boolean) {
+fun DropDownMenu(
+    durType: DurationType?,
+    visible: Boolean,
+    onTypeChangeCallback: (DurationType) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
     val suggestions = listOf(DurationType.WEEKLY, DurationType.MONTHLY, DurationType.YEARLY)
-    var selectedText by remember { mutableStateOf("") }
+    var selectedText by remember { mutableStateOf(durType?.type ?: "") }
 
     var textfieldSize by remember { mutableStateOf(Size.Zero) }
 
@@ -57,6 +61,7 @@ fun DropDownMenu(visible: Boolean) {
             OutlinedTextField(
                 value = selectedText,
                 onValueChange = { selectedText = it },
+                readOnly = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .onGloballyPositioned { coordinates ->
@@ -79,6 +84,7 @@ fun DropDownMenu(visible: Boolean) {
                     DropdownMenuItem(onClick = {
                         selectedText = label.type
                         expanded = false
+                        onTypeChangeCallback(label)
                     },
                         text = { Text(text = label.type) }
                     )
