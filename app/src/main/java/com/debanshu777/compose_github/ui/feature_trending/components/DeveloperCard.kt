@@ -1,5 +1,6 @@
 package com.debanshu777.compose_github.ui.feature_trending.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,10 +42,17 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
+import com.debanshu777.compose_github.ui.base.Screen
+import kotlinx.coroutines.Job
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun DeveloperCard(item: TrendingDeveloperItem, navController: NavController, viewModel: GitHubViewModel = hiltViewModel()) {
+fun DeveloperCard(
+    item: TrendingDeveloperItem,
+    navController: NavController,
+    action: (String) -> Job,
+    viewModel: GitHubViewModel = hiltViewModel()
+) {
     ElevatedCard(
         modifier = Modifier.height(160.dp),
     ) {
@@ -52,11 +60,11 @@ fun DeveloperCard(item: TrendingDeveloperItem, navController: NavController, vie
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 5.dp),
-//                .clickable {
-//                    item.username?.let { it1 -> viewModel.getUserData(it1) }
-//                    navController.navigate(Screen.ProfileScreen.route)
-//                },
+                .padding(horizontal = 5.dp)
+                .clickable {
+                    item.username?.let { it1 -> action(it1) }
+                    navController.navigate(Screen.ProfileScreen.route)
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(

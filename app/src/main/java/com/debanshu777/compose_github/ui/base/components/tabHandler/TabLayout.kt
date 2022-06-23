@@ -23,9 +23,10 @@ import com.debanshu777.compose_github.ui.feature_trending.components.DeveloperCa
 import com.debanshu777.compose_github.ui.feature_trending.components.RepositoryCard
 import composedb.githubDB.DeveloperFollow
 import composedb.githubDB.RepositoryFollow
+import kotlinx.coroutines.Job
 
 @Composable
-fun <T> TabLayout(data: List<T>, navController: NavController) {
+fun <T> TabLayout(data: List<T>, actionList: List<(String) -> Job>, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,13 +43,13 @@ fun <T> TabLayout(data: List<T>, navController: NavController) {
                     RepositoryCard(item)
                 }
                 if(item is DeveloperFollow){
-                    FollowDeveloperCard(item)
+                    FollowDeveloperCard(item, navController, actionList[1])
                 }
                 if(item is RepositoryFollow){
                     FollowRepositoryCard(item)
                 }
                 if (item is TrendingDeveloperItem) {
-                    DeveloperCard(item,navController)
+                    DeveloperCard(item, navController, actionList[1])
                 }
                 Spacer(modifier = Modifier.height(5.dp))
             }

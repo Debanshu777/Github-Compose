@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,21 +21,30 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.debanshu777.compose_github.ui.base.Screen
 import composedb.githubDB.DeveloperFollow
+import kotlinx.coroutines.Job
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun FollowDeveloperCard(item: DeveloperFollow) {
+fun FollowDeveloperCard(
+    item: DeveloperFollow,
+    navController: NavController,
+    action: (String) -> Job
+) {
     ElevatedCard(
-        modifier = Modifier.height(110.dp),
+        modifier = Modifier.height(110.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
                 .padding(horizontal = 5.dp, vertical = 5.dp)
-                .clickable { },
+                .clickable {
+                    action(item.username)
+                    navController.navigate(Screen.ProfileScreen.route)
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(

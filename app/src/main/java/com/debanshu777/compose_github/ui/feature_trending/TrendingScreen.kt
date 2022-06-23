@@ -25,12 +25,14 @@ fun TrendingScreen(viewModel: GitHubViewModel, navController: NavController) {
     val pagerState = rememberPagerState(0)
     val pageCount = 2
     val tabList = listOf("Repositories", "Developers")
+    val actionList =
+        listOf({ s: String -> viewModel.getUserData(s) }, { s: String -> viewModel.getUserData(s) })
     val dataList = listOf(trendingRepositoryDataState.data, trendingDeveloperDataState.data)
     Column(modifier = Modifier.padding(top = if (durationTypeFilterVisibility == true) 56.dp else 15.dp)) {
         DropDownMenu(
             durationType,
             durationTypeFilterVisibility ?: false
         ) { viewModel.updateDurationType(it) }
-        TabHandler(pagerState, pageCount, tabList, dataList, navController)
+        TabHandler(pagerState, pageCount, tabList, actionList, dataList, navController)
     }
 }

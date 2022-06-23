@@ -23,7 +23,9 @@ fun FollowScreen(navController: NavController, viewModel: GitHubViewModel = hilt
     val pageCount = 2
     val tabList = listOf("Repositories", "Developers")
     val dataList = listOf(repositoryFollowList, developerFollowList)
+    val actionList =
+        listOf({ s: String -> viewModel.getUserData(s) }, { s: String -> viewModel.getUserData(s) })
     Column(modifier = Modifier.padding(top = 56.dp)) {
-        TabHandler(pagerState, pageCount, tabList, dataList, navController)
+        TabHandler(pagerState, pageCount, tabList, actionList, dataList, navController)
     }
 }
