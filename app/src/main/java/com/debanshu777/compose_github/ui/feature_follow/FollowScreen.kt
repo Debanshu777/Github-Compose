@@ -7,16 +7,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.base.components.tabHandler.TabHandler
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun FollowScreen(navController: NavController, viewModel: GitHubViewModel = hiltViewModel()) {
+fun FollowScreen(navController: NavController, viewModel: GitHubViewModel = getViewModel()) {
     val developerFollowList by viewModel.developerList.collectAsState(emptyList())
     val repositoryFollowList by viewModel.repositoryList.collectAsState(emptyList())
     val pagerState = rememberPagerState(0)

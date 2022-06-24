@@ -9,7 +9,7 @@ data class PinnedUserProjectItem(
     @SerialName("description")
     val description: String? = null, // Snapchat Clone with Jetpack Compose and Clean Architecture - Navigation Components, CamaraX, android-maps-compose, Exoplayer, Detekt, Coil, Gradle Secrets, Permission Handling.
     @SerialName("forks")
-    val forks: Int?, // 0
+    val forks: String?, // 0
     @SerialName("image")
     val image: String?, // https://opengraph.githubassets.com/1/Debanshu777/Compose-Snapchat-Clone
     @SerialName("language")

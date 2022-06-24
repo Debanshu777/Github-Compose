@@ -12,15 +12,15 @@ import com.debanshu777.compose_github.utils.Resource
 import composedb.githubDB.DeveloperFollow
 import composedb.githubDB.RepositoryFollow
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class MainRepository @Inject constructor(
+class MainRepository constructor(
     private val remoteRepository: RemoteRepository,
     private val localRepository: LocalRepository
 ) {
     suspend fun getRepositoryById(id: Long): RepositoryFollow? {
         return localRepository.getRepositoryById(id)
     }
+
     suspend fun getDeveloperById(Id: Long): DeveloperFollow? {
         return localRepository.getDeveloperById(Id)
     }

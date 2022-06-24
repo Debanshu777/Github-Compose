@@ -37,13 +37,13 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.network.model.TrendingDeveloperItem
 import com.debanshu777.compose_github.ui.base.Screen
 import kotlinx.coroutines.Job
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +51,7 @@ fun DeveloperCard(
     item: TrendingDeveloperItem,
     navController: NavController,
     action: (String) -> Job,
-    viewModel: GitHubViewModel = hiltViewModel()
+    viewModel: GitHubViewModel = getViewModel()
 ) {
     ElevatedCard(
         modifier = Modifier.height(160.dp),
@@ -98,7 +98,7 @@ fun DeveloperCard(
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
                 Text(
-                    text = item.repo!!.name ?: "NA",
+                    text = item.repo?.name ?: "NA",
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
@@ -106,7 +106,7 @@ fun DeveloperCard(
                 Spacer(modifier = Modifier.height(3.dp))
                 Text(
                     modifier = Modifier.width(250.dp),
-                    text = item.repo.description ?: "NA",
+                    text = item.repo?.description ?: "NA",
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
