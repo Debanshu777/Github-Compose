@@ -98,7 +98,7 @@ fun DeveloperCard(
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                 )
                 Text(
-                    text = item.repo!!.name ?: "NA",
+                    text = item.repo?.name ?: "NA",
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
@@ -106,7 +106,7 @@ fun DeveloperCard(
                 Spacer(modifier = Modifier.height(3.dp))
                 Text(
                     modifier = Modifier.width(250.dp),
-                    text = item.repo.description ?: "NA",
+                    text = item.repo?.description ?: "NA",
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),

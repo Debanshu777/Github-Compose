@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,10 +37,25 @@ import androidx.core.graphics.toColorInt
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.R
 import composedb.githubDB.RepositoryFollow
+import kotlinx.coroutines.Job
+import me.saket.swipe.SwipeAction
+import me.saket.swipe.SwipeableActionsBox
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun FollowRepositoryCard(item: RepositoryFollow) {
+fun FollowRepositoryCard(item: RepositoryFollow,cardAction: (Long) -> Job) {
+    val deleteItem = SwipeAction(
+        onSwipe = { cardAction(item.id) },
+        icon = {
+            Icon(
+                modifier = Modifier.padding(16.dp),
+                imageVector = Icons.Outlined.Delete,
+                contentDescription = null,
+            )
+        },
+        background = MaterialTheme.colorScheme.errorContainer
+    )
+    SwipeableActionsBox(endActions = listOf(deleteItem)) {
     ElevatedCard(
         modifier = Modifier.height(160.dp),
     ) {
@@ -60,7 +78,7 @@ fun FollowRepositoryCard(item: RepositoryFollow) {
                 contentDescription = "User Avatar"
             )
             Column(
-                modifier = Modifier.padding(horizontal=8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -119,7 +137,7 @@ fun FollowRepositoryCard(item: RepositoryFollow) {
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
-                    ){
+                    ) {
                         Canvas(
                             modifier = Modifier
                                 .height(10.dp)
@@ -139,6 +157,7 @@ fun FollowRepositoryCard(item: RepositoryFollow) {
                     }
                 }
             }
+        }
         }
     }
 }
