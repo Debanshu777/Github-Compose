@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
@@ -43,7 +43,7 @@ import me.saket.swipe.SwipeableActionsBox
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun FollowRepositoryCard(item: RepositoryFollow,cardAction: (Long) -> Job) {
+fun FollowRepositoryCard(item: RepositoryFollow, cardAction: (Long) -> Job) {
     val deleteItem = SwipeAction(
         onSwipe = { cardAction(item.id) },
         icon = {
@@ -53,111 +53,117 @@ fun FollowRepositoryCard(item: RepositoryFollow,cardAction: (Long) -> Job) {
                 contentDescription = null,
             )
         },
+        isUndo = true,
         background = MaterialTheme.colorScheme.errorContainer
     )
-    SwipeableActionsBox(endActions = listOf(deleteItem)) {
-    ElevatedCard(
-        modifier = Modifier.height(160.dp),
+    SwipeableActionsBox(
+        modifier = Modifier.padding(vertical = 2.5.dp),
+        swipeThreshold = 150.dp,
+        endActions = listOf(deleteItem)
     ) {
-        Row(
+        ElevatedCard(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(horizontal = 5.dp, vertical = 5.dp)
-                .clickable {
-                },
-            verticalAlignment = Alignment.CenterVertically
+                .height(160.dp)
+                .align(Alignment.CenterStart),
         ) {
-            AsyncImage(
+            Row(
                 modifier = Modifier
-                    .height(70.dp)
-                    .width(70.dp)
-                    .clip(CircleShape),
-                model = item.avatar,
-                contentScale = ContentScale.Fit,
-                contentDescription = "User Avatar"
-            )
-            Column(
-                modifier = Modifier.padding(horizontal = 8.dp)
+                    .fillMaxSize()
+                    .padding(horizontal = 5.dp, vertical = 5.dp)
+                    .clickable {
+                    },
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Text(
-                        text = item.stars.toString(),
-                        fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .size(25.dp)
-                            .padding(3.dp),
-                        painter = painterResource(id = R.drawable.ic_star),
-                        contentDescription = "Star Icon"
-                    )
-                    Text(
-                        text = item.forks.toString(),
-                        fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
-                    )
-                    Icon(
-                        modifier = Modifier
-                            .size(25.dp)
-                            .padding(3.dp),
-                        painter = painterResource(id = R.drawable.ic_git_icon),
-                        contentDescription = "Git Icon"
-                    )
-                }
-                Text(
-                    text = item.name,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
-                )
-                Text(
-                    text = "@${item.authorName}",
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
-                )
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = item.description ?: "",
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
-                )
-                Row(
+                AsyncImage(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .height(70.dp)
+                        .width(70.dp)
+                        .clip(CircleShape),
+                    model = item.avatar,
+                    contentScale = ContentScale.Fit,
+                    contentDescription = "User Avatar"
+                )
+                Column(
+                    modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        Canvas(
-                            modifier = Modifier
-                                .height(10.dp)
-                                .width(10.dp)
-                        ) {
-                            drawCircle(
-                                color = item.languageColor?.toColorInt()?.let { Color(it) }
-                                    ?: Color.Green,
-                                radius = 20f
-                            )
-                        }
                         Text(
-                            modifier = Modifier.padding(horizontal = 5.dp),
-                            text = item.language ?: "NA",
+                            text = item.stars.toString(),
                             fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
                         )
+                        Icon(
+                            modifier = Modifier
+                                .size(25.dp)
+                                .padding(3.dp),
+                            painter = painterResource(id = R.drawable.ic_star),
+                            contentDescription = "Star Icon"
+                        )
+                        Text(
+                            text = item.forks.toString(),
+                            fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                        )
+                        Icon(
+                            modifier = Modifier
+                                .size(25.dp)
+                                .padding(3.dp),
+                            painter = painterResource(id = R.drawable.ic_git_icon),
+                            contentDescription = "Git Icon"
+                        )
+                    }
+                    Text(
+                        text = item.name,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
+                    )
+                    Text(
+                        text = "@${item.authorName}",
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = item.description ?: "",
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = TextUnit(value = 12F, type = TextUnitType.Sp),
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Canvas(
+                                modifier = Modifier
+                                    .height(10.dp)
+                                    .width(10.dp)
+                            ) {
+                                drawCircle(
+                                    color = item.languageColor?.toColorInt()?.let { Color(it) }
+                                        ?: Color.Green,
+                                    radius = 20f
+                                )
+                            }
+                            Text(
+                                modifier = Modifier.padding(horizontal = 5.dp),
+                                text = item.language ?: "NA",
+                                fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                            )
+                        }
                     }
                 }
             }
-        }
         }
     }
 }

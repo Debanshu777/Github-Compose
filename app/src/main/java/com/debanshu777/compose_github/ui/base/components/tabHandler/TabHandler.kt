@@ -35,10 +35,10 @@ fun TabsContent(
     dataList: List<List<Any>>,
     navController: NavController
 ) {
-    HorizontalPager(state = pagerState, count = pageCount) { page ->
+    HorizontalPager(state = pagerState, count = pageCount, userScrollEnabled = false) { page ->
         when (page) {
-            0 -> TabLayout(dataList[0], actionList, cardAction,navController)
-            1 -> TabLayout(dataList[1], actionList, cardAction,navController)
+            0 -> TabLayout(dataList[0], actionList, cardAction, navController)
+            1 -> TabLayout(dataList[1], actionList, cardAction, navController)
         }
     }
 }
