@@ -1,10 +1,8 @@
 package com.debanshu777.compose_github.ui.feature_follow.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.debanshu777.compose_github.ui.base.Screen
 import composedb.githubDB.DeveloperFollow
 import kotlinx.coroutines.Job
 import me.saket.swipe.SwipeAction
@@ -51,11 +48,18 @@ fun FollowDeveloperCard(
                 contentDescription = null,
             )
         },
+        isUndo = true,
         background = MaterialTheme.colorScheme.errorContainer
     )
-    SwipeableActionsBox(endActions = listOf(deleteItem)) {
+    SwipeableActionsBox(
+        modifier = Modifier.padding(vertical = 2.5.dp),
+        swipeThreshold = 150.dp,
+        endActions = listOf(deleteItem)
+    ) {
         ElevatedCard(
-            modifier = Modifier.height(110.dp).align(Alignment.CenterStart)
+            modifier = Modifier
+                .height(110.dp)
+                .align(Alignment.CenterStart)
         ) {
             Row(
                 modifier = Modifier
