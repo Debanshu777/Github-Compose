@@ -3,15 +3,15 @@ package com.debanshu777.compose_github.network.dataSource.local
 import composedb.githubDB.DeveloperFollow
 import composedb.githubDB.RepositoryFollow
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class LocalRepository @Inject constructor(
+class LocalRepository constructor(
     private val developerDataSourceImpl: DeveloperDataSource,
     private val repositoryDataSourceImpl: RepositoryDataSource
 ) {
     suspend fun getRepositoryById(id: Long): RepositoryFollow? {
         return repositoryDataSourceImpl.getRepositoryById(id)
     }
+
     suspend fun getDeveloperById(Id: Long): DeveloperFollow? {
         return developerDataSourceImpl.getDeveloperById(Id)
     }

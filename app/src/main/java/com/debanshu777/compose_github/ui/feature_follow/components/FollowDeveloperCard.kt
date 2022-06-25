@@ -3,13 +3,18 @@ package com.debanshu777.compose_github.ui.feature_follow.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,51 +31,63 @@ import coil.compose.AsyncImage
 import com.debanshu777.compose_github.ui.base.Screen
 import composedb.githubDB.DeveloperFollow
 import kotlinx.coroutines.Job
+import me.saket.swipe.SwipeAction
+import me.saket.swipe.SwipeableActionsBox
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun FollowDeveloperCard(
     item: DeveloperFollow,
     navController: NavController,
-    action: (String) -> Job
+    action: (String) -> Job,
+    cardAction: (Long) -> Job
 ) {
-    ElevatedCard(
-        modifier = Modifier.height(110.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 5.dp, vertical = 5.dp)
-                .clickable {
-                    action(item.username)
-                    navController.navigate(Screen.ProfileScreen.route)
-                },
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(
-                modifier = Modifier
-                    .height(70.dp)
-                    .width(70.dp)
-                    .clip(CircleShape),
-                model = item.avatar,
-                contentScale = ContentScale.Fit,
-                contentDescription = "User Avatar"
+    val deleteItem = SwipeAction(
+        onSwipe = { cardAction(item.id) },
+        icon = {
+            Icon(
+                modifier = Modifier.padding(16.dp),
+                imageVector = Icons.Outlined.Delete,
+                contentDescription = null,
             )
-            Column(
-                modifier = Modifier.padding(horizontal = 8.dp)
+        },
+        background = MaterialTheme.colorScheme.errorContainer
+    )
+    SwipeableActionsBox(endActions = listOf(deleteItem)) {
+        ElevatedCard(
+            modifier = Modifier.height(110.dp).align(Alignment.CenterStart)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 5.dp, vertical = 5.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = item.name,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
+                AsyncImage(
+                    modifier = Modifier
+                        .height(70.dp)
+                        .width(70.dp)
+                        .clip(CircleShape),
+                    model = item.avatar,
+                    contentScale = ContentScale.Fit,
+                    contentDescription = "User Avatar"
                 )
-                Text(
-                    text = "@${item.username}",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
-                )
+                Column(
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                ) {
+                    Text(
+                        text = item.name,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = TextUnit(value = 20F, type = TextUnitType.Sp),
+                    )
+                    Text(
+                        text = "@${item.username}",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                    )
+                }
             }
         }
     }

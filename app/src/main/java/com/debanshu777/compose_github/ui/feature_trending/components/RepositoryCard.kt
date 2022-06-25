@@ -40,15 +40,15 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.debanshu777.compose_github.R
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.network.model.TrendingRepositoryItem
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun RepositoryCard(item: TrendingRepositoryItem, viewModel: GitHubViewModel = hiltViewModel()) {
+fun RepositoryCard(item: TrendingRepositoryItem, viewModel: GitHubViewModel = getViewModel()) {
     ElevatedCard(
         modifier = Modifier.height(165.dp),
     ) {

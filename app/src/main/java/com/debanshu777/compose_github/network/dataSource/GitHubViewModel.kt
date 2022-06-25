@@ -17,14 +17,11 @@ import com.debanshu777.compose_github.ui.feature_trending.state.DeveloperTrendin
 import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendingState
 import com.debanshu777.compose_github.utils.DurationType
 import com.debanshu777.compose_github.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class GitHubViewModel @Inject constructor(private val mainRepository: MainRepository) :
+class GitHubViewModel constructor(private val mainRepository: MainRepository) :
     ViewModel() {
     private val _userDataState = MutableLiveData(ProfileState())
     val userDataState: LiveData<ProfileState> = _userDataState
@@ -195,5 +192,13 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
         mainRepository.insertRepository(
             id, authorName, name, avatar, description, language, languageColor, forks, stars
         )
+    }
+
+    fun deleteRepositoryById(id: Long)=viewModelScope.launch{
+        mainRepository.deleteRepositoryById(id)
+    }
+
+    fun deleteDeveloperById(id:Long)=viewModelScope.launch {
+        mainRepository.deleteDeveloperById(id)
     }
 }

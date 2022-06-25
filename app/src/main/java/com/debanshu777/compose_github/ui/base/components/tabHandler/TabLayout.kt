@@ -26,7 +26,12 @@ import composedb.githubDB.RepositoryFollow
 import kotlinx.coroutines.Job
 
 @Composable
-fun <T> TabLayout(data: List<T>, actionList: List<(String) -> Job>, navController: NavController) {
+fun <T> TabLayout(
+    data: List<T>,
+    actionList: List<(String) -> Job>,
+    cardAction: List<(Long) -> Job>,
+    navController: NavController
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,11 +47,11 @@ fun <T> TabLayout(data: List<T>, actionList: List<(String) -> Job>, navControlle
                 if (item is TrendingRepositoryItem) {
                     RepositoryCard(item)
                 }
-                if(item is DeveloperFollow){
-                    FollowDeveloperCard(item, navController, actionList[1])
+                if (item is DeveloperFollow) {
+                    FollowDeveloperCard(item, navController, actionList[1], cardAction[1])
                 }
-                if(item is RepositoryFollow){
-                    FollowRepositoryCard(item)
+                if (item is RepositoryFollow) {
+                    FollowRepositoryCard(item,cardAction[0])
                 }
                 if (item is TrendingDeveloperItem) {
                     DeveloperCard(item, navController, actionList[1])
