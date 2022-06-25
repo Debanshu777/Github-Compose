@@ -33,6 +33,6 @@ fun TrendingScreen(viewModel: GitHubViewModel, navController: NavController) {
             durationType,
             durationTypeFilterVisibility ?: false
         ) { viewModel.updateDurationType(it) }
-        TabHandler(pagerState, pageCount, tabList, actionList, dataList, navController)
+        TabHandler(pagerState, pageCount, tabList, actionList, listOf() ,dataList, navController)
     }
 }

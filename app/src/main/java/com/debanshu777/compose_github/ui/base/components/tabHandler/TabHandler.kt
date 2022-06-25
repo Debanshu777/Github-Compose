@@ -15,12 +15,13 @@ fun TabHandler(
     pageCount: Int,
     tabNames: List<String>,
     actionList: List<(String) -> Job>,
+    cardAction: List<(Long) -> Job>,
     dataList: List<List<Any>>,
     navController: NavController
 ) {
     Column {
         Tabs(pagerState = pagerState, tabNames)
-        TabsContent(pagerState = pagerState, pageCount, actionList, dataList, navController)
+        TabsContent(pagerState = pagerState, pageCount, actionList, cardAction ,dataList, navController)
     }
 }
 
@@ -30,13 +31,14 @@ fun TabsContent(
     pagerState: PagerState,
     pageCount: Int,
     actionList: List<(String) -> Job>,
+    cardAction: List<(Long) -> Job>,
     dataList: List<List<Any>>,
     navController: NavController
 ) {
     HorizontalPager(state = pagerState, count = pageCount) { page ->
         when (page) {
-            0 -> TabLayout(dataList[0], actionList, navController)
-            1 -> TabLayout(dataList[1], actionList, navController)
+            0 -> TabLayout(dataList[0], actionList, cardAction,navController)
+            1 -> TabLayout(dataList[1], actionList, cardAction,navController)
         }
     }
 }

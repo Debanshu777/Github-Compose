@@ -25,7 +25,8 @@ fun FollowScreen(navController: NavController, viewModel: GitHubViewModel = getV
     val dataList = listOf(repositoryFollowList, developerFollowList)
     val actionList =
         listOf({ s: String -> viewModel.getUserData(s) }, { s: String -> viewModel.getUserData(s) })
+    val cardAction = listOf({i:Long -> viewModel.deleteRepositoryById(i)},{i:Long -> viewModel.deleteDeveloperById(i)})
     Column(modifier = Modifier.padding(top = 56.dp)) {
-        TabHandler(pagerState, pageCount, tabList, actionList, dataList, navController)
+        TabHandler(pagerState, pageCount, tabList, actionList, cardAction,dataList, navController)
     }
 }

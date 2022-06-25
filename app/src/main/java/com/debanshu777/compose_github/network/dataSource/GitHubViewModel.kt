@@ -193,4 +193,12 @@ class GitHubViewModel constructor(private val mainRepository: MainRepository) :
             id, authorName, name, avatar, description, language, languageColor, forks, stars
         )
     }
+
+    fun deleteRepositoryById(id: Long)=viewModelScope.launch{
+        mainRepository.deleteRepositoryById(id)
+    }
+
+    fun deleteDeveloperById(id:Long)=viewModelScope.launch {
+        mainRepository.deleteDeveloperById(id)
+    }
 }

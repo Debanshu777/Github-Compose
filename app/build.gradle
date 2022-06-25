@@ -120,6 +120,9 @@ dependencies {
 
     //AndroidSVG
     implementation 'com.caverock:androidsvg-aar:1.4'
+
+    //Swipe
+    implementation 'me.saket.swipe:swipe:1.0.0'
 }
 
 sqldelight{
