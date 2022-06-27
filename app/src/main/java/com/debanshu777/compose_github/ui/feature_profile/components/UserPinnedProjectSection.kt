@@ -2,8 +2,10 @@ package com.debanshu777.compose_github.ui.feature_profile.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,10 +32,11 @@ import androidx.core.graphics.toColorInt
 import com.debanshu777.compose_github.R
 import com.debanshu777.compose_github.network.model.PinnedUserProjectItem
 import com.debanshu777.compose_github.ui.feature_profile.state.PinnedProjectState
+import com.debanshu777.compose_github.utils.Loader
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun UserPinnedProjectSection(userPinnedProject: PinnedProjectState?) {
+fun UserPinnedProjectSection(userPinnedProject: PinnedProjectState) {
     Column(
         modifier = Modifier
             .padding(bottom = 160.dp)
@@ -45,8 +48,14 @@ fun UserPinnedProjectSection(userPinnedProject: PinnedProjectState?) {
             fontWeight = FontWeight.W300,
             fontSize = TextUnit(value = 18F, type = TextUnitType.Sp),
         )
-        userPinnedProject?.data?.forEach {
-            UserPinnedProjectSectionItem(it)
+        if(userPinnedProject.isLoading){
+            Box(modifier=Modifier.fillMaxSize().height(150.dp).padding(20.dp), contentAlignment = Alignment.Center) {
+                Loader(R.raw.github_loading_anim)
+            }
+        }else {
+            userPinnedProject.data?.forEach {
+                UserPinnedProjectSectionItem(it)
+            }
         }
     }
 }

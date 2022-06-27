@@ -18,7 +18,6 @@ import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendi
 import com.debanshu777.compose_github.utils.DurationType
 import com.debanshu777.compose_github.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,13 +25,13 @@ import javax.inject.Inject
 @HiltViewModel
 class GitHubViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
-    private val _userDataState = MutableLiveData(ProfileState())
+    private val _userDataState = MutableLiveData(ProfileState(isLoading = true))
     val userDataState: LiveData<ProfileState> = _userDataState
 
-    private val _userPinnedImage = MutableLiveData(PinnedProjectState())
+    private val _userPinnedImage = MutableLiveData(PinnedProjectState(isLoading = true))
     val userPinnedState: LiveData<PinnedProjectState> = _userPinnedImage
 
-    private val _userStatsState = MutableLiveData(ProfileStatsState())
+    private val _userStatsState = MutableLiveData(ProfileStatsState(isLoading = true))
     val userStatsState: LiveData<ProfileStatsState> = _userStatsState
 
     private val _durationType = MutableStateFlow(DurationType.WEEKLY)
@@ -41,8 +40,8 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     private val _durationTypeFilterVisibility = MutableLiveData(false)
     val durationTypeFilterVisibility: LiveData<Boolean> = _durationTypeFilterVisibility
 
-    val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState())
-    val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState())
+    val trendingRepositoryDataState = MutableStateFlow(RepositoryTrendingState(isLoading = true))
+    val trendingDeveloperDataState = MutableStateFlow(DeveloperTrendingState(isLoading = true))
     val developerList = mainRepository.getAllDeveloper()
     val repositoryList = mainRepository.getAllRepository()
     val searchState = MutableStateFlow(SearchState())
@@ -78,8 +77,8 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     }
 
     fun getUserData(userName: String) = viewModelScope.launch {
-        async { getUserStats(userName) }
-        async { getPinnedProject(userName) }
+        launch { getUserStats(userName) }
+        launch { getPinnedProject(userName) }
         when (val result = mainRepository.getUserData(userName)) {
             is Resource.Loading -> {
                 _userDataState.value = ProfileState(isLoading = true)
@@ -128,7 +127,7 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
                 _userPinnedImage.value = PinnedProjectState(isLoading = true)
             }
             is Resource.Success -> {
-                _userPinnedImage.value = PinnedProjectState(data = result.data ?: emptyList())
+                _userPinnedImage.value = PinnedProjectState(data = result.data)
             }
             is Resource.Error -> {
                 _userPinnedImage.value = PinnedProjectState(error = result.message)
