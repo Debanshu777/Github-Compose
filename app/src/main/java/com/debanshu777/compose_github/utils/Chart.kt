@@ -44,63 +44,29 @@ fun Chart(
     data: Map<Pair<String, String>, Float>,
     barCornersRadius: Float = 10f,
     barWidth: Float = 50f,
-    height: Dp,
     labelOffset: Float = 60f,
     labelColor: Color = Color.Black,
-    isExpanded: Boolean = true,
 ) {
     var screenSize by remember {
         mutableStateOf(Size.Zero)
     }
-
-    var chosenBar by remember {
-        mutableStateOf(-1)
-    }
     var chosenBarKey by remember {
         mutableStateOf("")
     }
-
-    val cardHeight by animateDpAsState(
-        targetValue = if (isExpanded) height else 50.dp,
-        animationSpec = tween(
-            1000,
-            easing = LinearOutSlowInEasing
-        )
-    )
-
-    LaunchedEffect(chosenBar) {
-        delay(3000)
-        chosenBarKey = ""
-    }
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(cardHeight)
+            .height(150.dp)
             .animateContentSize()
     ) {
         Canvas(modifier = Modifier
             .fillMaxSize()
-            .alpha(if (cardHeight < height) (cardHeight - 90.dp) / height else 1f)
             .padding(
                 top = 65.dp,
                 bottom = 20.dp,
                 start = 30.dp,
                 end = 30.dp
-            )
-            .pointerInput(Unit) {
-                this.detectTapGestures(onPress = {
-                    chosenBar = detectPosition(
-                        screenSize = screenSize,
-                        offset = it,
-                        listSize = data.size,
-                        itemWidth = barWidth
-                    )
-                    if (chosenBar >= 0) {
-                        chosenBarKey = data.toList()[chosenBar].first.toString()
-                    }
-                })
-            },
+            ),
             onDraw = {
                 screenSize = size
                 val spaceBetweenBars =
@@ -172,18 +138,4 @@ fun Chart(
                 }
             })
     }
-}
-
-
-private fun detectPosition(screenSize: Size, offset: Offset, listSize: Int, itemWidth: Float): Int {
-    val spaceBetweenBars =
-        (screenSize.width - (listSize * itemWidth)) / (listSize - 1)
-    var spaceStep = 0f
-    for (i in 0 until listSize) {
-        if (offset.x in spaceStep..(spaceStep + itemWidth)) {
-            return i
-        }
-        spaceStep += spaceBetweenBars + itemWidth
-    }
-    return -1
 }

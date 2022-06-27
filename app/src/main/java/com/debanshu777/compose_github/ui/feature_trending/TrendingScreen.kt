@@ -1,17 +1,22 @@
 package com.debanshu777.compose_github.ui.feature_trending
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.debanshu777.compose_github.R
 import com.debanshu777.compose_github.network.dataSource.GitHubViewModel
 import com.debanshu777.compose_github.ui.base.components.DropDownMenu
 import com.debanshu777.compose_github.ui.base.components.tabHandler.TabHandler
+import com.debanshu777.compose_github.utils.Loader
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 
@@ -33,6 +38,20 @@ fun TrendingScreen(viewModel: GitHubViewModel, navController: NavController) {
             durationType,
             durationTypeFilterVisibility ?: false
         ) { viewModel.updateDurationType(it) }
-        TabHandler(pagerState, pageCount, tabList, actionList, listOf() ,dataList, navController)
+        if (trendingDeveloperDataState.isLoading && trendingRepositoryDataState.isLoading) {
+            Box(modifier=Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                 Loader(R.raw.github_loading_anim)
+            }
+        } else {
+            TabHandler(
+                pagerState,
+                pageCount,
+                tabList,
+                actionList,
+                listOf(),
+                dataList,
+                navController
+            )
+        }
     }
 }

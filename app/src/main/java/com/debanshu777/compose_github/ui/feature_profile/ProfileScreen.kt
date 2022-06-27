@@ -26,7 +26,7 @@ fun ProfileScreen(viewModel: GitHubViewModel = getViewModel()) {
             .verticalScroll(rememberScrollState())
     ) {
         ProfileDetailsScreen(profileData)
-        UserStatsSection(userStats)
-        UserPinnedProjectSection(userPinnedProject)
+        UserStatsSection(userStats!!)
+        UserPinnedProjectSection(userPinnedProject!!)
     }
 }
