@@ -43,9 +43,16 @@ import me.saket.swipe.SwipeableActionsBox
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun FollowRepositoryCard(item: RepositoryFollow, cardAction: (Long) -> Job) {
+fun FollowRepositoryCard(
+    item: RepositoryFollow,
+    cardAction: (Long) -> Job,
+    onShowSnackbar: (String) -> Unit
+) {
     val deleteItem = SwipeAction(
-        onSwipe = { cardAction(item.id) },
+        onSwipe = {
+            cardAction(item.id)
+            onShowSnackbar("Removing ${item.name} from following")
+        },
         icon = {
             Icon(
                 modifier = Modifier.padding(16.dp),
@@ -59,7 +66,8 @@ fun FollowRepositoryCard(item: RepositoryFollow, cardAction: (Long) -> Job) {
     SwipeableActionsBox(
         modifier = Modifier.padding(vertical = 2.5.dp),
         swipeThreshold = 150.dp,
-        endActions = listOf(deleteItem)
+        endActions = listOf(deleteItem),
+        backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceVariant
     ) {
         ElevatedCard(
             modifier = Modifier
@@ -150,8 +158,9 @@ fun FollowRepositoryCard(item: RepositoryFollow, cardAction: (Long) -> Job) {
                                     .width(10.dp)
                             ) {
                                 drawCircle(
-                                    color = item.languageColor?.toColorInt()?.let { Color(it) }
-                                        ?: Color.Green,
+                                    color = if (item.languageColor == "NA" || item.languageColor == null) Color.Green else
+                                        item.languageColor.toColorInt()
+                                            .let { Color(it) },
                                     radius = 20f
                                 )
                             }

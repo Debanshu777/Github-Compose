@@ -35,11 +35,12 @@ import kotlinx.coroutines.Job
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun <T> TabLayout(
-    data: List<T>,
+fun TabLayout(
+    data: List<Any>,
     actionList: List<(String) -> Job>,
     cardAction: List<(Long) -> Job>,
-    navController: NavController
+    navController: NavController,
+    onShowSnackbar: (String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -69,16 +70,22 @@ fun <T> TabLayout(
             ) {
                 items(data) { item ->
                     if (item is TrendingRepositoryItem) {
-                        RepositoryCard(item)
+                        RepositoryCard(item, onShowSnackbar)
                     }
                     if (item is DeveloperFollow) {
-                        FollowDeveloperCard(item, navController, actionList[1], cardAction[1])
+                        FollowDeveloperCard(
+                            item,
+                            navController,
+                            actionList[1],
+                            cardAction[1],
+                            onShowSnackbar
+                        )
                     }
                     if (item is RepositoryFollow) {
-                        FollowRepositoryCard(item, cardAction[0])
+                        FollowRepositoryCard(item, cardAction[0], onShowSnackbar)
                     }
                     if (item is TrendingDeveloperItem) {
-                        DeveloperCard(item, navController, actionList[1])
+                        DeveloperCard(item, navController, actionList[1], onShowSnackbar)
                     }
                     Spacer(modifier = Modifier.height(5.dp))
                 }

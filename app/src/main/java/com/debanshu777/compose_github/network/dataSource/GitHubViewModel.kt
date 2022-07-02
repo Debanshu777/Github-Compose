@@ -8,11 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.debanshu777.compose_github.ui.base.state.SearchState
+import com.debanshu777.compose_github.ui.base.state.SearchWidgetState
 import com.debanshu777.compose_github.ui.feature_profile.state.PinnedProjectState
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileState
 import com.debanshu777.compose_github.ui.feature_profile.state.ProfileStatsState
-import com.debanshu777.compose_github.ui.feature_search.state.SearchState
-import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
 import com.debanshu777.compose_github.ui.feature_trending.state.DeveloperTrendingState
 import com.debanshu777.compose_github.ui.feature_trending.state.RepositoryTrendingState
 import com.debanshu777.compose_github.utils.DurationType
@@ -87,7 +87,7 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
                 _userDataState.value = ProfileState(data = result.data)
             }
             is Resource.Error -> {
-                _userDataState.value = ProfileState(error = result.message)
+                _userDataState.value = ProfileState(isLoading = false, error = result.message)
             }
         }
     }
@@ -95,19 +95,22 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
     fun searchUser(searchText: String) = viewModelScope.launch {
         when (val result = mainRepository.searchUser(searchText)) {
             is Resource.Loading -> {
-                searchState.value = SearchState(isLoading = true)
+                searchState.value = SearchState(isLoading = true, data = emptyList())
             }
             is Resource.Success -> {
                 searchState.value =
-                    SearchState(data = if (result.data == null) emptyList() else result.data.items)
+                    SearchState(
+                        isLoading = false,
+                        data = if (result.data == null) emptyList() else result.data.items
+                    )
             }
             is Resource.Error -> {
-                searchState.value = SearchState(error = result.message)
+                searchState.value = SearchState(isLoading = false, error = result.message)
             }
         }
     }
 
-    fun getUserStats(username: String) = viewModelScope.launch {
+    private fun getUserStats(username: String) = viewModelScope.launch {
         when (val result = mainRepository.getUserStats(username)) {
             is Resource.Loading -> {
                 _userStatsState.value = ProfileStatsState(isLoading = true)
@@ -116,55 +119,66 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
                 _userStatsState.value = ProfileStatsState(data = result.data)
             }
             is Resource.Error -> {
-                _userStatsState.value = ProfileStatsState(error = result.message)
+                _userStatsState.value = ProfileStatsState(isLoading = false, error = result.message)
             }
         }
     }
 
-    fun getPinnedProject(username: String) = viewModelScope.launch {
+    private fun getPinnedProject(username: String) = viewModelScope.launch {
         when (val result = mainRepository.getUserPinnedProject(username)) {
             is Resource.Loading -> {
-                _userPinnedImage.value = PinnedProjectState(isLoading = true)
+                _userPinnedImage.value = PinnedProjectState(isLoading = true, data = emptyList())
             }
             is Resource.Success -> {
-                _userPinnedImage.value = PinnedProjectState(data = result.data)
+                _userPinnedImage.value = PinnedProjectState(isLoading = false, data = result.data)
             }
             is Resource.Error -> {
-                _userPinnedImage.value = PinnedProjectState(error = result.message)
+                _userPinnedImage.value =
+                    PinnedProjectState(isLoading = false, error = result.message)
             }
         }
     }
 
-    fun getTrendingRepository(timeline: String) = viewModelScope.launch {
+    private fun getTrendingRepository(timeline: String) = viewModelScope.launch {
         when (val result = mainRepository.getTrendingRepository(timeline)) {
             is Resource.Loading -> {
-                trendingRepositoryDataState.value = RepositoryTrendingState(isLoading = true)
+                trendingRepositoryDataState.value =
+                    RepositoryTrendingState(isLoading = true, data = emptyList())
             }
             is Resource.Success -> {
                 trendingRepositoryDataState.value = RepositoryTrendingState(
+                    isLoading = false,
                     data = result.data
                         ?: emptyList()
                 )
             }
             is Resource.Error -> {
-                trendingRepositoryDataState.value = RepositoryTrendingState(error = result.message)
+                trendingRepositoryDataState.value =
+                    RepositoryTrendingState(
+                        isLoading = false,
+                        data = emptyList(),
+                        error = result.message
+                    )
             }
         }
     }
 
-    fun getTrendingDeveloper(timeline: String) = viewModelScope.launch {
+    private fun getTrendingDeveloper(timeline: String) = viewModelScope.launch {
         when (val result = mainRepository.getTrendingDeveloper(timeline)) {
             is Resource.Loading -> {
-                trendingDeveloperDataState.value = DeveloperTrendingState(isLoading = true)
+                trendingDeveloperDataState.value =
+                    DeveloperTrendingState(isLoading = true, data = emptyList())
             }
             is Resource.Success -> {
                 trendingDeveloperDataState.value = DeveloperTrendingState(
+                    isLoading = false,
                     data = result.data
                         ?: emptyList()
                 )
             }
             is Resource.Error -> {
-                trendingDeveloperDataState.value = DeveloperTrendingState(error = result.message)
+                trendingDeveloperDataState.value =
+                    DeveloperTrendingState(isLoading = false, error = result.message)
             }
         }
     }
@@ -196,11 +210,11 @@ class GitHubViewModel @Inject constructor(private val mainRepository: MainReposi
         )
     }
 
-    fun deleteRepositoryById(id: Long)=viewModelScope.launch{
+    fun deleteRepositoryById(id: Long) = viewModelScope.launch {
         mainRepository.deleteRepositoryById(id)
     }
 
-    fun deleteDeveloperById(id:Long)=viewModelScope.launch {
+    fun deleteDeveloperById(id: Long) = viewModelScope.launch {
         mainRepository.deleteDeveloperById(id)
     }
 }

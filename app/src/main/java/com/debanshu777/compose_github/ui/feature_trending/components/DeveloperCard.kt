@@ -14,6 +14,7 @@ import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,6 +44,7 @@ fun DeveloperCard(
     item: TrendingDeveloperItem,
     navController: NavController,
     action: (String) -> Job,
+    onShowSnackbar: (String) -> Unit,
     viewModel: GitHubViewModel = hiltViewModel()
 ) {
 
@@ -54,6 +56,7 @@ fun DeveloperCard(
                 item.name ?: "NA",
                 item.avatar ?: ""
             )
+            onShowSnackbar("Added ${item.username} to follow")
         },
         icon = {
             Icon(
@@ -68,7 +71,8 @@ fun DeveloperCard(
     SwipeableActionsBox(
         modifier = Modifier.padding(vertical = 2.5.dp),
         swipeThreshold = 150.dp,
-        endActions = listOf(saveIcon)
+        endActions = listOf(saveIcon),
+        backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceVariant
     ) {
         ElevatedCard(
             modifier = Modifier

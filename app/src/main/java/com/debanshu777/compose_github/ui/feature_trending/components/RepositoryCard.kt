@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +44,8 @@ import me.saket.swipe.SwipeableActionsBox
 
 @OptIn(ExperimentalUnitApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun RepositoryCard(item: TrendingRepositoryItem, viewModel: GitHubViewModel = hiltViewModel()) {
+fun RepositoryCard(item: TrendingRepositoryItem,
+                   onShowSnackbar: (String) -> Unit, viewModel: GitHubViewModel = hiltViewModel()) {
     val saveIcon = SwipeAction(
         onSwipe = {
             viewModel.insertRepository(
@@ -57,6 +59,7 @@ fun RepositoryCard(item: TrendingRepositoryItem, viewModel: GitHubViewModel = hi
                 item.forks!!.toLong(),
                 item.stars!!.toLong()
             )
+            onShowSnackbar("Added ${item.name} to follow")
         },
         icon = {
             Icon(
@@ -71,7 +74,8 @@ fun RepositoryCard(item: TrendingRepositoryItem, viewModel: GitHubViewModel = hi
     SwipeableActionsBox(
         modifier = Modifier.padding(vertical = 2.5.dp),
         swipeThreshold = 150.dp,
-        endActions = listOf(saveIcon)
+        endActions = listOf(saveIcon),
+        backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceVariant
     ) {
         ElevatedCard(
             modifier = Modifier
