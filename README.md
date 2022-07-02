@@ -7,7 +7,7 @@ Github Compose
 
 <p>
 Github Compose is you way to track the traending chart on Github.The project is set towards using some of the latest packages and libraraties to consume 4 sperate apis for getting the data.</p>
-<p>We are using <b>Ktor Client and SQLDelight</b> for all the heavy lifting with the help of both <b>Koin and Dagger Hilt implemention</b> binging in the freshness of <b>Material3</b>.</p>
+<p>We are using <b>Ktor Client and SQLDelight</b> for all the heavy lifting with the help of both <b>Koin and Dagger Hilt implemention</b> <i>on separate branches</i> and binging in the freshness of <b>Material3</b>.</p>
 <p>Made with ❤️ by <a href="https://github.com/Debanshu777">Debanshu777</a></p>
 
 ## Build with 🛠
