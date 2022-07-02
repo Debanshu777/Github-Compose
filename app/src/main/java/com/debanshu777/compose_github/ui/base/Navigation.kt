@@ -11,7 +11,11 @@ import com.debanshu777.compose_github.ui.feature_search.SearchScreen
 import com.debanshu777.compose_github.ui.feature_trending.TrendingScreen
 
 @Composable
-fun Navigation(viewModel: GitHubViewModel, navController: NavHostController) {
+fun Navigation(
+    viewModel: GitHubViewModel,
+    navController: NavHostController,
+    onShowSnackbar: (String) -> Unit
+) {
     NavHost(navController = navController, startDestination = Screen.TrendingScreen.route) {
         composable(route = Screen.SearchScreen.route) {
             SearchScreen(viewModel, navController)
@@ -20,10 +24,10 @@ fun Navigation(viewModel: GitHubViewModel, navController: NavHostController) {
             ProfileScreen(viewModel)
         }
         composable(route = Screen.TrendingScreen.route) {
-            TrendingScreen(viewModel,navController)
+            TrendingScreen(viewModel, navController, onShowSnackbar)
         }
         composable(route = Screen.FollowScreen.route) {
-            FollowScreen(navController)
+            FollowScreen(navController, onShowSnackbar)
         }
     }
 }

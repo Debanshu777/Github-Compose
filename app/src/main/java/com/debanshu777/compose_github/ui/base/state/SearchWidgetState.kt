@@ -1,4 +1,4 @@
-package com.debanshu777.compose_github.ui.feature_search.state
+package com.debanshu777.compose_github.ui.base.state
 
 enum class SearchWidgetState {
     OPENED,

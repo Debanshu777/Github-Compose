@@ -37,10 +37,14 @@ fun FollowDeveloperCard(
     item: DeveloperFollow,
     navController: NavController,
     action: (String) -> Job,
-    cardAction: (Long) -> Job
+    cardAction: (Long) -> Job,
+    onShowSnackbar: (String) -> Unit
 ) {
     val deleteItem = SwipeAction(
-        onSwipe = { cardAction(item.id) },
+        onSwipe = {
+            cardAction(item.id)
+            onShowSnackbar("Removing ${item.username} from following")
+        },
         icon = {
             Icon(
                 modifier = Modifier.padding(16.dp),
@@ -54,7 +58,8 @@ fun FollowDeveloperCard(
     SwipeableActionsBox(
         modifier = Modifier.padding(vertical = 2.5.dp),
         swipeThreshold = 150.dp,
-        endActions = listOf(deleteItem)
+        endActions = listOf(deleteItem),
+        backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceVariant
     ) {
         ElevatedCard(
             modifier = Modifier

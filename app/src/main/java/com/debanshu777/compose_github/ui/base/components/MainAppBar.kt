@@ -8,7 +8,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.debanshu777.compose_github.ui.feature_search.state.SearchWidgetState
+import com.debanshu777.compose_github.ui.base.state.SearchWidgetState
 
 @Composable
 fun MainAppBar(

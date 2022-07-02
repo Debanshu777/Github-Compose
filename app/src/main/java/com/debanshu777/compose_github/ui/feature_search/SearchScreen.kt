@@ -2,6 +2,7 @@ package com.debanshu777.compose_github.ui.feature_search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,9 +51,25 @@ fun SearchScreen(viewModel: GitHubViewModel, navController: NavController) {
             contentPadding = PaddingValues(10.dp)
         ) {
             if (searchData.isLoading) {
-                item{
-                    Box(modifier=Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                item {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Loader(R.raw.github_loading_anim)
+                    }
+                }
+            } else if (searchData.error != null) {
+                item {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Loader(R.raw.error_page, Modifier.height(250.dp))
+                            Text(
+                                modifier = Modifier.padding(vertical = 10.dp),
+                                text = "Some Issue From Our Side",
+                                fontWeight = FontWeight.W300,
+                                fontSize = TextUnit(value = 14F, type = TextUnitType.Sp),
+                            )
+                        }
                     }
                 }
             } else {
