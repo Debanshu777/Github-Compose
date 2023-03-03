@@ -1,8 +1,8 @@
 package com.debanshu777.compose_github.network.dataSource.local
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.debanshu777.compose_github.GithubDatatbase
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
 import composedb.githubDB.RepositoryFollow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +25,7 @@ class RepositoryDataSourceImpl(
     }
 
     override fun getAllRepository(): Flow<List<RepositoryFollow>> {
-        return queries.getAllRepository().asFlow().mapToList()
+        return queries.getAllRepository().asFlow().mapToList(Dispatchers.IO)
     }
 
     override suspend fun deleteRepositoryById(id: Long) {

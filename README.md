@@ -5,6 +5,7 @@ Github Compose
 <img src="https://github.com/Debanshu777/Compose-Github/blob/master/assets/GithubCompose.gif" />
 </h1>
 
+** Sorry, all the api expect the github search is not working. This app is not operable but you can look into the dependencies and latest implementation I will try to make it updated**
 <p>
 Github Compose is you way to track the traending chart on Github.The project is set towards using some of the latest packages and libraraties to consume 4 sperate apis for getting the data.</p>
 <p>We are using <b>Ktor Client and SQLDelight</b> for all the heavy lifting with the help of both <b>Koin and Dagger Hilt implemention</b> <i>on separate branches</i> and binging in the freshness of <b>Material3</b>.</p>

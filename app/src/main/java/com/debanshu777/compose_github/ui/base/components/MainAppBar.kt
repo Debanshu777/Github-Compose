@@ -1,12 +1,15 @@
 package com.debanshu777.compose_github.ui.base.components
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import com.debanshu777.compose_github.ui.base.state.SearchWidgetState
 
@@ -38,9 +41,10 @@ fun MainAppBar(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultAppBar(onSearchClick: () -> Unit, onDurationTypeClick: () -> Unit) {
-    SmallTopAppBar(
+    TopAppBar(
         title = {
             Text(text = "GitHub")
         },
@@ -57,6 +61,5 @@ fun DefaultAppBar(onSearchClick: () -> Unit, onDurationTypeClick: () -> Unit) {
                     contentDescription = "Search Icon"
                 )
             }
-        },
-    )
+        })
 }

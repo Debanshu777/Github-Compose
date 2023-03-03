@@ -1,5 +1,6 @@
 package com.debanshu777.compose_github.ui.base.components.tabHandler
 
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -20,7 +21,7 @@ fun Tabs(pagerState: PagerState, tabNames: List<String>) {
     TabRow(
         selectedTabIndex = pagerState.currentPage,
         divider = {
-            TabRowDefaults.Divider(
+            Divider(
                 thickness = 2.dp,
             )
         }
